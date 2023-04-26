@@ -63,13 +63,6 @@ public class MainController {
         else approximatePrice += 800;
         return approximatePrice;
     }
-//    @GetMapping("/shops/{id}")
-//    public List<ShopDTO> getAllShops(@PathVariable("id")long id){
-//        Page<Shops> page = shopsRepository.findAll(PageRequest.of((int) (id-1), 2));
-//        List<Shops> shopsList = page.getContent();
-//        log.info(shopsList);
-//        return shopMapper.toDtoList(shopsList);
-//    }
     @Operation(summary = "Get shops")
     @GetMapping("/shops/{id}")
     public Page<Shops> getAllShops(@PathVariable("id")long id){

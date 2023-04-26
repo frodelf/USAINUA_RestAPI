@@ -67,7 +67,7 @@ public class UserController {
     public void addCard(@RequestBody @Valid CreditCardDTO creditCardDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Users users = usersService.getByEmail(authentication.getName());
-        CreditCards cards = new CreditCards(creditCardDTO);
+        CreditCards cards = creditCardMapper.toEntity(creditCardDTO);
         creditCardsService.save(cards);
         usersService.getByEmail(authentication.getName()).getCreditCards().add(cards);
         usersService.save(users);

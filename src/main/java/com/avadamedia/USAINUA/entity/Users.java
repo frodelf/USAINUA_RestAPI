@@ -31,19 +31,14 @@ public class Users {
     private String phone;
     @OneToMany
     List<Orders> orders;
-
     @OneToMany
     List<Storage> compositions;
-
     @OneToMany
     List<CreditCards> creditCards;
-
     @OneToMany
     List<Finances> finances;
-
     @OneToMany
     List<UsersAddress> usersAddresses;
-
     @ManyToMany(fetch = FetchType.EAGER)
     List<Roles> roles;
 }

@@ -1,6 +1,6 @@
 package com.avadamedia.USAINUA.repositories;
 
-import com.avadamedia.USAINUA.models.Roles;
+import com.avadamedia.USAINUA.entity.Roles;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

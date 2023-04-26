@@ -1,10 +1,10 @@
 package com.avadamedia.USAINUA.jwt;
 
 import com.avadamedia.USAINUA.auth.JwtResponse;
-import com.avadamedia.USAINUA.models.Roles;
-import com.avadamedia.USAINUA.models.Users;
+import com.avadamedia.USAINUA.entity.Roles;
+import com.avadamedia.USAINUA.entity.Users;
 import com.avadamedia.USAINUA.props.JwtProperties;
-import com.avadamedia.USAINUA.services.UsersService;
+import com.avadamedia.USAINUA.services.impl.UsersServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -30,7 +30,7 @@ public class JwtTokenProvider {
     private final JwtProperties jwtProperties;
 
     private final UserDetailsService userDetailsService;
-    private final UsersService usersService;
+    private final UsersServiceImpl usersService;
     private Key key;
 
     @PostConstruct

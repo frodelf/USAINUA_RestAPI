@@ -1,15 +1,12 @@
 package com.avadamedia.USAINUA.services;
 
-import com.avadamedia.USAINUA.models.Storage;
-import com.avadamedia.USAINUA.repositories.StorageRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.avadamedia.USAINUA.entity.Storage;
 
-@Service
-@RequiredArgsConstructor
-public class StorageService {
-    private final StorageRepository storageRepository;
+import java.util.List;
 
-    public void save(Storage storage){
-        storageRepository.save(storage);}
+public interface StorageService {
+    List<Storage> getAll();
+    void save(Storage storage);
+    void deleteById(long id);
+    Storage getById(long id);
 }

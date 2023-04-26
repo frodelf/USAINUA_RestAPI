@@ -1,11 +1,12 @@
 package com.avadamedia.USAINUA.controllers;
 
-import com.avadamedia.USAINUA.auth.AuthService;
+import com.avadamedia.USAINUA.services.AuthService;
 import com.avadamedia.USAINUA.auth.JwtRequest;
 import com.avadamedia.USAINUA.auth.JwtResponse;
-import com.avadamedia.USAINUA.models.Users;
+import com.avadamedia.USAINUA.entity.Users;
 import com.avadamedia.USAINUA.repositories.UsersRepository;
-import com.avadamedia.USAINUA.services.EmailUtil;
+import com.avadamedia.USAINUA.util.EmailUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,8 +21,8 @@ import java.util.Optional;
 public class AuthorizationController {
     private final AuthService authService;
     private final UsersRepository usersRepository;
-
     @GetMapping("/get-password")
+    @Operation(summary = "Get password for user by email")
     public void getPassword(@RequestParam("email")String email){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         int password = (int) (Math.random() * 9000 + 1000);
@@ -36,14 +37,15 @@ public class AuthorizationController {
         users.get().setPassword(passwordEncoder.encode(String.valueOf(password)));
         usersRepository.save(users.get());
     }
-
+    @Operation(summary = "Authorization user")
     @PostMapping("/login")
     public JwtResponse login(@RequestBody JwtRequest loginRequest){
         return authService.login(loginRequest);
     }
-
     @PostMapping("/refresh")
+    @Operation(summary = "Update the access token")
     public JwtResponse refresh(@RequestBody String refreshToken) {
+        log.info(refreshToken);
         return authService.refresh(refreshToken);
     }
 }

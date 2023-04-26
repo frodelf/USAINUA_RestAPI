@@ -1,14 +1,9 @@
 package com.avadamedia.USAINUA.services;
 
-import com.avadamedia.USAINUA.models.UsersAddress;
-import com.avadamedia.USAINUA.repositories.UsersAddressRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.avadamedia.USAINUA.entity.Users;
+import com.avadamedia.USAINUA.entity.UsersAddress;
 
-@Service
-@RequiredArgsConstructor
-public class UsersAddressService {
-    private final UsersAddressRepository usersAddressRepository;
-
-    public void save(UsersAddress usersAddress){usersAddressRepository.save(usersAddress);}
+public interface UsersAddressService {
+    void save(UsersAddress usersAddress);
+    UsersAddress getById(long id);
 }

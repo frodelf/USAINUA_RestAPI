@@ -1,6 +1,6 @@
 package com.avadamedia.USAINUA.repositories;
 
-import com.avadamedia.USAINUA.models.Shops;
+import com.avadamedia.USAINUA.entity.Shops;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

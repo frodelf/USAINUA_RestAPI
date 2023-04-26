@@ -1,6 +1,6 @@
 package com.avadamedia.USAINUA.repositories;
 
-import com.avadamedia.USAINUA.models.Users;
+import com.avadamedia.USAINUA.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -7,6 +7,7 @@ import com.avadamedia.USAINUA.entity.Users;
 import com.avadamedia.USAINUA.repositories.UsersRepository;
 import com.avadamedia.USAINUA.util.EmailUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -44,7 +45,7 @@ public class AuthorizationController {
     }
     @PostMapping("/refresh")
     @Operation(summary = "Update the access token")
-    public JwtResponse refresh(@RequestBody String refreshToken) {
+    public JwtResponse refresh(@Parameter(description = "Refresh token") @RequestBody String refreshToken) {
         log.info(refreshToken);
         return authService.refresh(refreshToken);
     }

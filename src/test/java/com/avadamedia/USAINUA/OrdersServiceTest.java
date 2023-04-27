@@ -7,10 +7,7 @@ import com.avadamedia.USAINUA.entity.UsersAddress;
 import com.avadamedia.USAINUA.enums.Status;
 import com.avadamedia.USAINUA.models.OrderDTO;
 import com.avadamedia.USAINUA.repositories.*;
-import com.avadamedia.USAINUA.services.impl.AdditionalServicesServiceImpl;
 import com.avadamedia.USAINUA.services.impl.OrdersServiceImpl;
-import com.avadamedia.USAINUA.services.impl.UsersAddressServiceImpl;
-import com.avadamedia.USAINUA.services.impl.UsersServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,18 +28,12 @@ import static org.mockito.Mockito.*;
 class OrdersServiceTest {
     @Autowired
     private OrdersServiceImpl ordersService;
-    @Autowired
-    private UsersServiceImpl usersService;
-    @Autowired
-    private AdditionalServicesServiceImpl additionalServicesService;
     @MockBean
     private OrdersRepository ordersRepository;
     @MockBean
     private UsersRepository usersRepository;
     @MockBean
     private UsersAddressRepository usersAddressRepository;
-    @MockBean
-    private FinancesRepository financesRepository;
     @MockBean
     private AdditionalServicesRepository additionalServicesRepository;
     @Test

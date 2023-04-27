@@ -5,6 +5,7 @@ import com.avadamedia.USAINUA.mapper.*;
 import com.avadamedia.USAINUA.models.*;
 import com.avadamedia.USAINUA.services.impl.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,7 @@ public class UserController {
     }
     @Operation(summary = "Update the money by user")
     @PostMapping("add-money")
-    public void addMoney(@RequestParam("sum")double sum){
+    public void addMoney(@Parameter(description = "The money to be deducted from the user's balance") @RequestParam("sum")double sum){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Users users = usersService.getByEmail(authentication.getName());
         users.setMoney(users.getMoney()+sum);

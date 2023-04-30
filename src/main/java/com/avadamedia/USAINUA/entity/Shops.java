@@ -19,6 +19,6 @@ public class Shops {
     private Long id;
     @Column(unique = true)
     private String link;
-    @Column(name = "image-name",unique = true)
+    @Column(name = "image_name",unique = true)
     private String imageName;
 }

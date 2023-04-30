@@ -3,11 +3,15 @@ package com.avadamedia.USAINUA.models;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Data
 @Schema(description = "Credit card DTO")
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreditCardDTO {
     @NotBlank(message = "Номер кредитної карти не був вказаний")
     @Pattern(regexp = "^[0-9]+$", message = "Некоректний номер карти, повинен бути формат \"0000111122223333\"")

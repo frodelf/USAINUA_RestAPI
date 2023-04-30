@@ -26,13 +26,10 @@ public class Users {
     private double money;
     private Boolean isMan;
     private Date birthday;
-    @Column(name = "e-mail")
     private String email;
     private String phone;
     @OneToMany
     List<Orders> orders;
-    @OneToMany
-    List<Storage> compositions;
     @OneToMany
     List<CreditCards> creditCards;
     @OneToMany

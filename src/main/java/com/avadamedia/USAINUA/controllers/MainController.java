@@ -80,4 +80,6 @@ public class MainController {
         Page<Products> productsPage = productsRepository.findAll(PageRequest.of((int)(id-1), 2));
         return productMapper.toDtoList(productsPage.getContent());
     }
+
+
 }

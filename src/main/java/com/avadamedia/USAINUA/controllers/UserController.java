@@ -41,7 +41,8 @@ public class UserController {
     @Operation(summary = "Get all the finances by user")
     @GetMapping("finances")
     public List<FinancesDTO> getAllFinances(){
-        return financesMapping.toDtoList(financesService.getAll());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return financesMapping.toDtoList(usersService.getByEmail(authentication.getName()).getFinances());
     }
     @GetMapping("get-money")
     @Operation(summary = "Get the money by user")
@@ -70,7 +71,7 @@ public class UserController {
         Users users = usersService.getByEmail(authentication.getName());
         CreditCards cards = creditCardMapper.toEntity(creditCardDTO);
         creditCardsService.save(cards);
-        usersService.getByEmail(authentication.getName()).getCreditCards().add(cards);
+        users.getCreditCards().add(cards);
         usersService.save(users);
     }
     @Operation(summary = "Add the address for user")

@@ -40,8 +40,6 @@ public class Orders {
     private Date dataRegistration;
     @Column(name = "date_receiving")
     private Date dateReceiving;
-
-
     @ManyToMany
     private List<AdditionalServices> additionalServices;
     @ManyToOne

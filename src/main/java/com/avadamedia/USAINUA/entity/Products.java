@@ -23,7 +23,7 @@ public class Products {
     private String name;
     private double price;
     private String type;
-    @Column(unique = true)
+    @Column(unique = true, length = 1000)
     private String link;
     @Column(name = "image_name", unique = true)
     private String imageName;

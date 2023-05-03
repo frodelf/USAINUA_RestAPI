@@ -124,6 +124,7 @@
     </dependencies>
 
 	<build>
+		<finalName>USAINUA_RestAPI</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

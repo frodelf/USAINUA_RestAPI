@@ -1,25 +1,15 @@
 name: Deploy to Tomcat
-
-on:
-  push:
-    branches: [main]
-
+on: push
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '19'
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build the project
+        run: |
+          mvn package
+          mvn war:war
       - name: Deploy to Tomcat
-        uses: peaceiris/actions-tomcat@v1
-        with:
-          host: http://kino.avada-media-dev1.od.ua/manager/html
-          username: tomcat
-          password: OUlIg40qOZ
-          path: /${{ secrets.TOMCAT_CONTEXT_PATH }}
-          war: target/*.war
+        run: |
+          curl -T target/USAINUA_RestAPI.war -u tomcat:OUlIg40qOZ "http://kino.avada-media-dev1.od.ua/manager/html/deploy?path=/USAINUA_RestAPI&update=true"

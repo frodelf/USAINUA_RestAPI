@@ -6,8 +6,9 @@ import com.avadamedia.USAINUA.models.*;
 import com.avadamedia.USAINUA.services.impl.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping("/user/")
 @RequiredArgsConstructor
 @Tag(name = "User Controller", description = "User API")
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
     private final UsersServiceImpl usersService;
     private final StorageServiceImpl storageService;
@@ -52,7 +54,9 @@ public class UserController {
     }
     @Operation(summary = "Update the money by user")
     @PostMapping("add-money")
-    public void addMoney(@Parameter(description = "The money to be deducted from the user's balance") @RequestParam("sum")double sum){
+    public void addMoney(
+            @Parameter(description = "The money to be deducted from the user's balance")
+            @RequestParam("sum")double sum){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Users users = usersService.getByEmail(authentication.getName());
         users.setMoney(users.getMoney()+sum);

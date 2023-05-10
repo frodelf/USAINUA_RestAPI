@@ -6,14 +6,10 @@ import com.avadamedia.USAINUA.mapper.OrderMapper;
 import com.avadamedia.USAINUA.models.OrderDTO;
 import com.avadamedia.USAINUA.repositories.OrdersRepository;
 import com.avadamedia.USAINUA.services.OrdersService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Date;
 import java.time.LocalDate;

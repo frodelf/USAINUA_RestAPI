@@ -6,10 +6,12 @@ import com.avadamedia.USAINUA.mapper.UserAddressMapper;
 import com.avadamedia.USAINUA.models.OrderDTO;
 import com.avadamedia.USAINUA.models.UserAddressDTO;
 import com.avadamedia.USAINUA.services.impl.*;
+import javax.validation.Valid;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +23,7 @@ import java.util.List;
 @RequestMapping("/orders/")
 @RequiredArgsConstructor
 @Tag(name = "Order Controller", description = "Orders API")
+@SecurityRequirement(name = "bearerAuth")
 public class OrdersController {
     private final OrdersServiceImpl ordersService;
     private final UsersServiceImpl usersService;
@@ -36,7 +39,9 @@ public class OrdersController {
     }
     @PostMapping("edit-users-address/{id}")
     @Operation(summary = "Edit user's address")
-    public void editUsersAddress(@Parameter(description = "User address id") @PathVariable("id")Long id,
+    public void editUsersAddress(
+            @Parameter(description = "User address id")
+            @PathVariable("id")Long id,
                                  @RequestBody UserAddressDTO addressDTO){
         UsersAddress address = userAddressMapper.toEntity(addressDTO);
         address.setId(id);
@@ -44,19 +49,25 @@ public class OrdersController {
     }
     @GetMapping("order/{id}")
     @Operation(summary = "Get order by id")
-    public OrderDTO getOrderById(@Parameter(description = "Order's id") @PathVariable("id")Long id){
+    public OrderDTO getOrderById(
+            @Parameter(description = "Order's id")
+            @PathVariable("id")Long id){
         return orderMapper.toDto(ordersService.getById(id));
     }
     @PostMapping("pay-order/{id}")
     @Operation(summary = "Pay for the order")
-    public void payOrder(@Parameter(description = "Order's id") @PathVariable("id")Long id){
+    public void payOrder(
+            @Parameter(description = "Order's id")
+            @PathVariable("id")Long id){
         ordersService.payOrder(id);
     }
     @PostMapping("make-order")
     @Operation(summary = "Make order")
     public void addOrder(@RequestBody @Valid OrderDTO orderDTO,
-                         @Parameter(description = "List of id for additional services") @RequestParam("additional-services") List<Long> idAdditionalServices,
-                         @Parameter(description = "User address id") @RequestParam("id-address")Long idAddress){
+                         @Parameter(description = "List of id for additional services")
+                         @RequestParam("additional-services") List<Long> idAdditionalServices,
+                         @Parameter(description = "User address id")
+                             @RequestParam("id-address")Long idAddress){
         ordersService.addOrder(orderDTO, idAdditionalServices, idAddress);
     }
 }

@@ -3,13 +3,11 @@ package com.avadamedia.USAINUA.exeptions;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import jakarta.validation.ConstraintViolation;
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
+import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class CustomExceptionHandler {

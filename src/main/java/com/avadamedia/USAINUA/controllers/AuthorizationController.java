@@ -56,7 +56,9 @@ public class AuthorizationController {
     }
     @PostMapping("/refresh")
     @Operation(summary = "Update the access token")
-    public JwtResponse refresh(@Parameter(description = "Refresh token") @RequestBody String refreshToken) {
+    public JwtResponse refresh(
+            @Parameter(description = "Refresh token")
+            @RequestHeader String refreshToken) {
         log.info(refreshToken);
         return authService.refresh(refreshToken);
     }

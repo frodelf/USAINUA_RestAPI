@@ -2,7 +2,6 @@ package com.avadamedia.USAINUA.mapper;
 
 import com.avadamedia.USAINUA.entity.Storage;
 import com.avadamedia.USAINUA.models.StorageDTO;
-import org.mapstruct.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,7 +2,6 @@ package com.avadamedia.USAINUA.mapper;
 
 import com.avadamedia.USAINUA.entity.Finances;
 import com.avadamedia.USAINUA.models.FinancesDTO;
-import org.mapstruct.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;

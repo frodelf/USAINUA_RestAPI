@@ -1,7 +1,6 @@
 package com.avadamedia.USAINUA.entity;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Users {
-    @Schema(description = "User id", example = "1")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @Id

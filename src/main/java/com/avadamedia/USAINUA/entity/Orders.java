@@ -1,7 +1,7 @@
 package com.avadamedia.USAINUA.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,7 +35,6 @@ public class Orders {
     @Column(name = "only_delivery")
     private boolean isOnlyDelivery;
     @Column(name = "data_registration")
-    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataRegistration;
     @Column(name = "date_receiving")

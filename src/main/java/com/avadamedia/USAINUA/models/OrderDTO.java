@@ -1,7 +1,9 @@
 package com.avadamedia.USAINUA.models;
 
+//import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.constraints.*;
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 

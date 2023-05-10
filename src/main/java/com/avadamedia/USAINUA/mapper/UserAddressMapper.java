@@ -2,7 +2,6 @@ package com.avadamedia.USAINUA.mapper;
 
 import com.avadamedia.USAINUA.entity.UsersAddress;
 import com.avadamedia.USAINUA.models.UserAddressDTO;
-import org.mapstruct.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,12 +1,14 @@
 package com.avadamedia.USAINUA.models;
 
+//import io.swagger.v3.oas.annotations.media.Schema;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,7 +24,6 @@ public class UserDTO {
     @NotBlank(message = "Назва користувача не була вказана")
     @Pattern(regexp = "^[a-zA-Zа-яА-Я і]+$", message = "Некоректне ім'я користувача")
     private String name;
-    @Schema(description = "User surname", example = "surname")
     @NotBlank(message = "Прізвище користувача не було вказано")
     @Pattern(regexp = "^[a-zA-Zа-яА-Я і]+$", message = "Некоректне прізвище користувача")
     private String surname;

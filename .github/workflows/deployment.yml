@@ -13,7 +13,7 @@ jobs:
       - name: Copy folder content recursively to remote
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: target/USAINUA_RestAPI.war
+          local: target/USAINUA_RestAPI
           remote: tomcat/webapps/
           host: kino.avada-media-dev1.od.ua
           username: avada_kino

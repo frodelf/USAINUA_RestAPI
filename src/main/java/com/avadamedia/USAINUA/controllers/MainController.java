@@ -1,8 +1,8 @@
 package com.avadamedia.USAINUA.controllers;
 
-import com.avadamedia.USAINUA.entity.AdditionalServices;
-import com.avadamedia.USAINUA.entity.Products;
-import com.avadamedia.USAINUA.entity.Shops;
+import com.avadamedia.USAINUA.entity.AdditionalService;
+import com.avadamedia.USAINUA.entity.Product;
+import com.avadamedia.USAINUA.entity.Shop;
 import com.avadamedia.USAINUA.mapper.ProductMapper;
 import com.avadamedia.USAINUA.mapper.ShopMapper;
 import com.avadamedia.USAINUA.models.ProductDTO;
@@ -38,14 +38,14 @@ public class MainController {
             @Parameter(description = "Transport for approximate shipping cost")
             @RequestParam("transport")String transport,
             @Parameter(description = "Additional services list for approximate shipping cost")
-            @RequestParam("additional-services")List<AdditionalServices> additionalServices,
+            @RequestParam("additional-services")List<AdditionalService> additionalServices,
             @Parameter(description = "Weight for approximate shipping cost")
             @RequestParam("weight")double weight,
             @Parameter(description = "Products' price for approximate shipping cost")
             @RequestParam("price")double price){
         double approximatePrice = 0;
         try{
-            for (AdditionalServices additionalService : additionalServices) {
+            for (AdditionalService additionalService : additionalServices) {
                 approximatePrice+=additionalService.getPrice();
             }
         }catch (Exception e){
@@ -62,12 +62,12 @@ public class MainController {
             @Parameter(description = "Transport for approximate shipping cost")
             @RequestParam("transport")String transport,
             @Parameter(description = "Additional services list for approximate shipping cost")
-            @RequestParam("additional-services")List<AdditionalServices> additionalServices,
+            @RequestParam("additional-services")List<AdditionalService> additionalServices,
             @Parameter(description = "Weight for approximate shipping cost")
             @RequestParam("weight")double weight){
         double approximatePrice = 0;
         try{
-            for (AdditionalServices additionalService : additionalServices) {
+            for (AdditionalService additionalService : additionalServices) {
                 approximatePrice+=additionalService.getPrice();
             }
         }catch (Exception e){
@@ -82,7 +82,7 @@ public class MainController {
     public List<ShopDTO> getAllShops(
             @Parameter(description = "ID of the page requested for shops")
             @PathVariable("id")long id){
-        Page<Shops> shopsPage = shopsRepository.findAll(PageRequest.of((int)(id-1), 2));
+        Page<Shop> shopsPage = shopsRepository.findAll(PageRequest.of((int)(id-1), 2));
         return shopMapper.toDtoList(shopsPage.getContent());
     }
     @Operation(summary = "Get products")
@@ -90,7 +90,7 @@ public class MainController {
     public List<ProductDTO> getAllProducts(
             @Parameter(description = "ID of the page requested for products")
             @PathVariable("id")long id){
-        Page<Products> productsPage = productsRepository.findAll(PageRequest.of((int)(id-1), 2));
+        Page<Product> productsPage = productsRepository.findAll(PageRequest.of((int)(id-1), 2));
         return productMapper.toDtoList(productsPage.getContent());
     }
 }

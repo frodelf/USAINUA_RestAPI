@@ -1,18 +1,17 @@
 package com.avadamedia.USAINUA.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Table(name = "products")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Products {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

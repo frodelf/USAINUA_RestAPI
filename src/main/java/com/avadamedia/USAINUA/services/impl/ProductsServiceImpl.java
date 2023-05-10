@@ -1,6 +1,6 @@
 package com.avadamedia.USAINUA.services.impl;
 
-import com.avadamedia.USAINUA.entity.Products;
+import com.avadamedia.USAINUA.entity.Product;
 import com.avadamedia.USAINUA.repositories.ProductsRepository;
 import com.avadamedia.USAINUA.services.ProductsService;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +13,10 @@ import java.util.List;
 public class ProductsServiceImpl implements ProductsService {
     private final ProductsRepository productsRepository;
 
-    public void save(Products products){productsRepository.save(products);}
-    public List<Products> getAll(){return productsRepository.findAll();}
-    public Products getByLink(String link){return productsRepository.findByLink(link).get();}
+    public void save(Product products){productsRepository.save(products);}
+    public List<Product> getAll(){return productsRepository.findAll();}
+    public Product getByLink(String link){return productsRepository.findByLink(link).get();}
     public void deleteById(Long id){productsRepository.deleteById(id);}
-    public Products getById(long id){return productsRepository.findById(id).get();}
-    public List<Products> getLast3(){return productsRepository.findTop3ByOrderByIdDesc();}
+    public Product getById(long id){return productsRepository.findById(id).get();}
+    public List<Product> getLast3(){return productsRepository.findTop3ByOrderByIdDesc();}
 }

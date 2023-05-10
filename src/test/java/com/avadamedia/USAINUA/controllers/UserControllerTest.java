@@ -3,7 +3,6 @@ package com.avadamedia.USAINUA.controllers;
 import com.avadamedia.USAINUA.entity.*;
 import com.avadamedia.USAINUA.models.*;
 import com.avadamedia.USAINUA.repositories.StorageRepository;
-import com.avadamedia.USAINUA.repositories.UsersAddressRepository;
 import com.avadamedia.USAINUA.repositories.UsersRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ class UserControllerTest {
     @Test
     @WithMockUser(username = "derkach2007artem@gmail.com")
     void addPersonalData() {
-        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(new Users()));
+        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(new User()));
         userController.addPersonalData(new UserDTO());
         verify(usersRepository, times(1)).save(any());
     }
@@ -46,10 +45,10 @@ class UserControllerTest {
         finances.add(new Finances(1L, new Date(2000, 12, 20),2100.25));
         finances.add(new Finances(3L, new Date(2003, 1, 26),3210.5));
 
-        Users users = new Users();
-        users.setFinances(finances);
+        User user = new User();
+        user.setFinances(finances);
 
-        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(users));
+        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
 
         List<FinancesDTO> financesDTO = userController.getAllFinances();
 
@@ -63,34 +62,34 @@ class UserControllerTest {
     @Test
     @WithMockUser(username = "derkach2007artem@gmail.com")
     void getMoney() {
-        Users users = new Users();
-        users.setMoney(1000);
-        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(users));
+        User user = new User();
+        user.setMoney(1000);
+        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
         double money = userController.getMoney();
-        assertEquals(money, users.getMoney());
+        assertEquals(money, user.getMoney());
     }
 
     @Test
     @WithMockUser(username = "derkach2007artem@gmail.com")
     void addMoney() {
-        Users users = new Users();
-        users.setMoney(1000);
-        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(users));
+        User user = new User();
+        user.setMoney(1000);
+        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
         userController.addMoney(109);
-        assertEquals(1109, users.getMoney());
+        assertEquals(1109, user.getMoney());
     }
 
     @Test
     @WithMockUser(username = "derkach2007artem@gmail.com")
     void getAllCreditCards() {
-        List<CreditCards> creditCards = new ArrayList<>();
-        creditCards.add(new CreditCards(1L, "0000111122223333", "12/12", "123"));
-        creditCards.add(new CreditCards(3L, "0011223344556677", "12/12", "234"));
+        List<CreditCard> creditCards = new ArrayList<>();
+        creditCards.add(new CreditCard(1L, "0000111122223333", "12/12", "123"));
+        creditCards.add(new CreditCard(3L, "0011223344556677", "12/12", "234"));
 
-        Users users = new Users();
-        users.setCreditCards(creditCards);
+        User user = new User();
+        user.setCreditCards(creditCards);
 
-        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(users));
+        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
 
         List<CreditCardDTO> creditCardDTO = userController.getAllCreditCards();
 
@@ -106,11 +105,11 @@ class UserControllerTest {
     @Test
     @WithMockUser(username = "derkach2007artem@gmail.com")
     void addCard() {
-        Users users = new Users();
-        users.setCreditCards(new ArrayList<CreditCards>());
-        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(users));
+        User user = new User();
+        user.setCreditCards(new ArrayList<CreditCard>());
+        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
         userController.addCard(new CreditCardDTO("0099887766554433", "11/11", "567"));
-        List<CreditCards> cards = users.getCreditCards();
+        List<CreditCard> cards = user.getCreditCards();
         assertEquals(1, cards.size());
         assertEquals("0099887766554433", cards.get(0).getCardsNumber());
         assertEquals("11/11", cards.get(0).getValidityPeriod());
@@ -120,13 +119,13 @@ class UserControllerTest {
     @Test
     @WithMockUser(username = "derkach2007artem@gmail.com")
     void addUsersAddress() {
-        Users users = new Users();
-        users.setUsersAddresses(new ArrayList<UsersAddress>());
+        User user = new User();
+        user.setUsersAddresses(new ArrayList<UsersAddress>());
         UserAddressDTO usersAddress = new UserAddressDTO();
         usersAddress.setAddressName("home");
-        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(users));
+        when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
         userController.addUsersAddress(usersAddress);
-        List<UsersAddress> addresses = users.getUsersAddresses();
+        List<UsersAddress> addresses = user.getUsersAddresses();
         assertEquals(1, addresses.size());
         assertEquals("home", addresses.get(0).getAddressName());
     }

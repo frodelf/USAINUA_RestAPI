@@ -1,8 +1,8 @@
 package com.avadamedia.USAINUA.jwt;
 
 import com.avadamedia.USAINUA.auth.JwtResponse;
-import com.avadamedia.USAINUA.entity.Roles;
-import com.avadamedia.USAINUA.entity.Users;
+import com.avadamedia.USAINUA.entity.Role;
+import com.avadamedia.USAINUA.entity.User;
 import com.avadamedia.USAINUA.props.JwtProperties;
 import com.avadamedia.USAINUA.services.impl.UsersServiceImpl;
 import io.jsonwebtoken.Claims;
@@ -39,7 +39,7 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes());
     }
 
-    public String createAccessToken(Long userId, String username, List<Roles> roles) {
+    public String createAccessToken(Long userId, String username, List<Role> roles) {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("id", userId);
         claims.put("roles", roles);
@@ -72,7 +72,7 @@ public class JwtTokenProvider {
             throw new RuntimeException();
         }
         Long userId = Long.valueOf(getId(refreshToken));
-        Users user = usersService.getById(userId);
+        User user = usersService.getById(userId);
         jwtResponse.setId(userId);
         jwtResponse.setUsername(user.getEmail());
         jwtResponse.setAccessToken(createAccessToken(userId, user.getEmail(), user.getRoles()));

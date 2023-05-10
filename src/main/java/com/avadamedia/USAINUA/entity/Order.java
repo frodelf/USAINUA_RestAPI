@@ -1,11 +1,10 @@
 package com.avadamedia.USAINUA.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
@@ -16,7 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Orders {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -40,7 +39,7 @@ public class Orders {
     @Column(name = "date_receiving")
     private Date dateReceiving;
     @ManyToMany
-    private List<AdditionalServices> additionalServices;
+    private List<AdditionalService> additionalServices;
     @ManyToOne
     UsersAddress usersAddresses;
 }

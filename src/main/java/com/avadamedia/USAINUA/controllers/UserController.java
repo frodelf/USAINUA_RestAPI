@@ -58,9 +58,9 @@ public class UserController {
             @Parameter(description = "The money to be deducted from the user's balance")
             @RequestParam("sum")double sum){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Users users = usersService.getByEmail(authentication.getName());
-        users.setMoney(users.getMoney()+sum);
-        usersService.save(users);
+        User user = usersService.getByEmail(authentication.getName());
+        user.setMoney(user.getMoney()+sum);
+        usersService.save(user);
     }
     @Operation(summary = "Get the credit card by user")
     @GetMapping("get-credit-cards")
@@ -72,21 +72,21 @@ public class UserController {
     @PostMapping("add-card")
     public void addCard(@RequestBody @Valid CreditCardDTO creditCardDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Users users = usersService.getByEmail(authentication.getName());
-        CreditCards cards = creditCardMapper.toEntity(creditCardDTO);
+        User user = usersService.getByEmail(authentication.getName());
+        CreditCard cards = creditCardMapper.toEntity(creditCardDTO);
         creditCardsService.save(cards);
-        users.getCreditCards().add(cards);
-        usersService.save(users);
+        user.getCreditCards().add(cards);
+        usersService.save(user);
     }
     @Operation(summary = "Add the address for user")
     @PostMapping("add-users-address")
     public void addUsersAddress(@RequestBody @Valid UserAddressDTO userAddressDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Users users = usersService.getByEmail(authentication.getName());
+        User user = usersService.getByEmail(authentication.getName());
         UsersAddress address = userAddressMapper.toEntity(userAddressDTO);
         usersAddressService.save(address);
-        users.getUsersAddresses().add(address);
-        usersService.save(users);
+        user.getUsersAddresses().add(address);
+        usersService.save(user);
     }
     @Operation(summary = "Get storages")
     @GetMapping("get-storages")

@@ -1,10 +1,11 @@
 package com.avadamedia.USAINUA.controllers;
 
-import com.avadamedia.USAINUA.entity.Roles;
+import com.avadamedia.USAINUA.entity.Role;
+import com.avadamedia.USAINUA.repositories.RolesRepository;
 import com.avadamedia.USAINUA.services.AuthService;
 import com.avadamedia.USAINUA.auth.JwtRequest;
 import com.avadamedia.USAINUA.auth.JwtResponse;
-import com.avadamedia.USAINUA.entity.Users;
+import com.avadamedia.USAINUA.entity.User;
 import com.avadamedia.USAINUA.repositories.UsersRepository;
 import com.avadamedia.USAINUA.services.impl.RolesServiceImpl;
 import com.avadamedia.USAINUA.util.EmailUtil;
@@ -33,16 +34,15 @@ public class AuthorizationController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         int password = (int) (Math.random() * 9000 + 1000);
         EmailUtil.sendEmail("20denisderkach04@gmail.com", email, password);
-        Optional<Users> users = usersRepository.findByEmail(email);
+        Optional<User> users = usersRepository.findByEmail(email);
         if(users.isEmpty()){
-            Users users1 = new Users();
-            users1.setEmail(email);
-            users1.setPassword(passwordEncoder.encode(String.valueOf(password)));
-            List<Roles> roles = new ArrayList<>();
+            User user1 = new User();
+            user1.setEmail(email);
+            user1.setPassword(passwordEncoder.encode(String.valueOf(password)));
+            List<Role> roles = new ArrayList<>();
             roles.add(rolesService.getById(1));
-            users1.setRoles(roles);
-            usersRepository.save(users1);
-
+            user1.setRoles(roles);
+            usersRepository.save(user1);
         }
         else {
             users.get().setPassword(passwordEncoder.encode(String.valueOf(password)));

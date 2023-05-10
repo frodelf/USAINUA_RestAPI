@@ -25,12 +25,12 @@ public class OrdersServiceImpl implements OrdersService {
     private final UsersAddressServiceImpl usersAddressService;
     private final AdditionalServicesServiceImpl additionalServicesService;
     private final OrderMapper orderMapper;
-    public void save(Orders orders){ordersRepository.save(orders);}
-    public Orders getById(long id){return ordersRepository.findById(id).get();}
+    public void save(Order orders){ordersRepository.save(orders);}
+    public Order getById(long id){return ordersRepository.findById(id).get();}
     public void payOrder(Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Orders orders = getById(id);
-        Users user = usersService.getByEmail(authentication.getName());
+        Order orders = getById(id);
+        User user = usersService.getByEmail(authentication.getName());
         if(user.getMoney()-orders.getTotalPrice() >= 0){
             user.setMoney(user.getMoney()-orders.getTotalPrice());
             orders.setStatus(Status.PAID);
@@ -47,10 +47,10 @@ public class OrdersServiceImpl implements OrdersService {
 
     public void addOrder(OrderDTO orderDTO, List<Long> idAdditionalServices, Long idAddress){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Users user = usersService.getByEmail(authentication.getName());
+        User user = usersService.getByEmail(authentication.getName());
         UsersAddress address = usersAddressService.getById(idAddress);
-        Orders order = orderMapper.toEntity(orderDTO);
-        List<AdditionalServices> additionalServices = new ArrayList<>();
+        Order order = orderMapper.toEntity(orderDTO);
+        List<AdditionalService> additionalServices = new ArrayList<>();
         for (Long aLong : idAdditionalServices) {
             additionalServices.add(additionalServicesService.getById(aLong));
         }

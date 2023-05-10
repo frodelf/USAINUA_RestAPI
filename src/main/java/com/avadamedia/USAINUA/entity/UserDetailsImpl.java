@@ -42,11 +42,11 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
-    public UserDetailsImpl getUserDetailsByUsers(Users users){
-        return new UserDetailsImpl(users.getId(), users.getEmail(), users.getName(), users.getPassword(), getAuthorities(users.getRoles()));
+    public UserDetailsImpl getUserDetailsByUsers(User user){
+        return new UserDetailsImpl(user.getId(), user.getEmail(), user.getName(), user.getPassword(), getAuthorities(user.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(List<Roles> roles) {
+    private Collection<? extends GrantedAuthority> getAuthorities(List<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 

@@ -1,15 +1,15 @@
 package com.avadamedia.USAINUA.repositories;
 
-import com.avadamedia.USAINUA.entity.Products;
+import com.avadamedia.USAINUA.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductsRepository extends JpaRepository<Products, Long> {
-    List<Products> findAll();
-    List<Products> findTop3ByOrderByIdDesc();
-    Optional<Products> findByLink(String link);
-    Optional<Products> findById(Long id);
+public interface ProductsRepository extends JpaRepository<Product, Long> {
+    List<Product> findAll();
+    List<Product> findTop3ByOrderByIdDesc();
+    Optional<Product> findByLink(String link);
+    Optional<Product> findById(Long id);
     void deleteById(Long id);
 }

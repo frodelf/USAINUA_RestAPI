@@ -1,7 +1,7 @@
 package com.avadamedia.USAINUA.repositories;
 
-import com.avadamedia.USAINUA.entity.CreditCards;
+import com.avadamedia.USAINUA.entity.CreditCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CreditCardsRepository extends JpaRepository<CreditCards, Long> {
+public interface CreditCardsRepository extends JpaRepository<CreditCard, Long> {
 }

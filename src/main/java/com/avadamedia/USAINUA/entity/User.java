@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users {
+public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @Id
@@ -27,13 +27,13 @@ public class Users {
     private String email;
     private String phone;
     @OneToMany
-    List<Orders> orders;
+    List<Order> orders;
     @OneToMany
-    List<CreditCards> creditCards;
+    List<CreditCard> creditCards;
     @OneToMany
     List<Finances> finances;
     @OneToMany
     List<UsersAddress> usersAddresses;
     @ManyToMany(fetch = FetchType.EAGER)
-    List<Roles> roles;
+    List<Role> roles;
 }

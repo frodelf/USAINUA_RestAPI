@@ -1,7 +1,7 @@
 package com.avadamedia.USAINUA.services;
 
-import com.avadamedia.USAINUA.entity.CreditCards;
+import com.avadamedia.USAINUA.entity.CreditCard;
 
 public interface CreditCardsService {
-    void save(CreditCards creditCards);
+    void save(CreditCard creditCard);
 }

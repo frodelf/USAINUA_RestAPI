@@ -1,6 +1,6 @@
 package com.avadamedia.USAINUA.services.impl;
 
-import com.avadamedia.USAINUA.entity.AdditionalServices;
+import com.avadamedia.USAINUA.entity.AdditionalService;
 import com.avadamedia.USAINUA.repositories.AdditionalServicesRepository;
 import com.avadamedia.USAINUA.services.AdditionalServicesService;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +13,9 @@ import java.util.List;
 public class AdditionalServicesServiceImpl implements AdditionalServicesService {
     private final AdditionalServicesRepository additionalServicesRepository;
 
-    public void save(AdditionalServices additionalServices){additionalServicesRepository.save(additionalServices);}
-    public AdditionalServices getByName(String name){return additionalServicesRepository.findByName(name).get();}
-    public AdditionalServices getById(long id){return additionalServicesRepository.findById(id).get();}
-    public List<AdditionalServices> getAll(){return additionalServicesRepository.findAll();}
+    public void save(AdditionalService additionalService){additionalServicesRepository.save(additionalService);}
+    public AdditionalService getByName(String name){return additionalServicesRepository.findByName(name).get();}
+    public AdditionalService getById(long id){return additionalServicesRepository.findById(id).get();}
+    public List<AdditionalService> getAll(){return additionalServicesRepository.findAll();}
     public void deleteById(long id){additionalServicesRepository.deleteById(id);}
 }

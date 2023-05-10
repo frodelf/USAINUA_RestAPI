@@ -1,6 +1,6 @@
 package com.avadamedia.USAINUA.mapper;
 
-import com.avadamedia.USAINUA.entity.Users;
+import com.avadamedia.USAINUA.entity.User;
 import com.avadamedia.USAINUA.models.UserDTO;
 import com.avadamedia.USAINUA.services.impl.UsersServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class UsersMapper {
     private final UsersServiceImpl usersService;
 
-    public Users toEntity(UserDTO userDTO){
+    public User toEntity(UserDTO userDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Users user = usersService.getByEmail(authentication.getName());
+        User user = usersService.getByEmail(authentication.getName());
 
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());

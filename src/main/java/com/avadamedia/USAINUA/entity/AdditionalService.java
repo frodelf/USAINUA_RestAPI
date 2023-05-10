@@ -1,24 +1,22 @@
 package com.avadamedia.USAINUA.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.URL;
 
 @Entity
-@Table(name = "shops")
+@Table(name = "additional_services")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Shops {
+public class AdditionalService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     @Column(unique = true)
-    private String link;
-    @Column(name = "image_name",unique = true)
-    private String imageName;
+    private String name;
+    private double price;
 }

@@ -1,12 +1,12 @@
 package com.avadamedia.USAINUA.mapper;
 
-import com.avadamedia.USAINUA.entity.Products;
+import com.avadamedia.USAINUA.entity.Product;
 import com.avadamedia.USAINUA.models.ProductDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 public class ProductMapper {
-    public ProductDTO toDto(Products products) {
+    public ProductDTO toDto(Product products) {
         if ( products == null ) {
             return null;
         }
@@ -21,24 +21,24 @@ public class ProductMapper {
 
         return productDTO;
     }
-    public List<ProductDTO> toDtoList(List<Products> products) {
+    public List<ProductDTO> toDtoList(List<Product> products) {
         if ( products == null ) {
             return null;
         }
 
         List<ProductDTO> list = new ArrayList<ProductDTO>( products.size() );
-        for ( Products product : products ) {
+        for ( Product product : products ) {
             list.add( toDto( product ) );
         }
 
         return list;
     }
-    public Products toEntity(ProductDTO productDTO) {
+    public Product toEntity(ProductDTO productDTO) {
         if ( productDTO == null ) {
             return null;
         }
 
-        Products product = new Products();
+        Product product = new Product();
 
         product.setName( productDTO.getName() );
         product.setPrice( productDTO.getPrice() );
@@ -48,12 +48,12 @@ public class ProductMapper {
 
         return product;
     }
-    public List<Products> toEntityList(List<ProductDTO> productDTO) {
+    public List<Product> toEntityList(List<ProductDTO> productDTO) {
         if ( productDTO == null ) {
             return null;
         }
 
-        List<Products> list = new ArrayList<Products>( productDTO.size() );
+        List<Product> list = new ArrayList<Product>( productDTO.size() );
         for ( ProductDTO productDTO1 : productDTO ) {
             list.add( toEntity( productDTO1 ) );
         }

@@ -10,6 +10,8 @@ jobs:
         run: |
           mvn package
           mvn war:war
+      - name: Tests
+        run: mvn test
       - name: Copy folder content recursively to remote
         uses: garygrossgarten/github-action-scp@release
         with:

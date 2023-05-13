@@ -18,5 +18,4 @@ public class ProductsServiceImpl implements ProductsService {
     public Product getByLink(String link){return productsRepository.findByLink(link).get();}
     public void deleteById(Long id){productsRepository.deleteById(id);}
     public Product getById(long id){return productsRepository.findById(id).get();}
-    public List<Product> getLast3(){return productsRepository.findTop3ByOrderByIdDesc();}
 }

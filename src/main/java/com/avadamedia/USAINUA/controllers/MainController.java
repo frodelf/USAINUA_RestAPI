@@ -66,12 +66,9 @@ public class MainController {
             @Parameter(description = "Weight for approximate shipping cost")
             @RequestParam("weight")double weight){
         double approximatePrice = 0;
-        try{
-            for (AdditionalService additionalService : additionalServices) {
-                approximatePrice+=additionalService.getPrice();
-            }
-        }catch (Exception e){
-        }
+
+        for (AdditionalService additionalService : additionalServices) {
+        approximatePrice+=additionalService.getPrice();}
         if(transport.equals("plane"))approximatePrice += 0.5*weight+1000;
         else if(transport.equals("ship"))approximatePrice += 0.3*weight+500;
         else approximatePrice += 800;

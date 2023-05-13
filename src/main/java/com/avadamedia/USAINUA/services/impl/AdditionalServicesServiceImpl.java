@@ -12,7 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdditionalServicesServiceImpl implements AdditionalServicesService {
     private final AdditionalServicesRepository additionalServicesRepository;
-
     public void save(AdditionalService additionalService){additionalServicesRepository.save(additionalService);}
     public AdditionalService getByName(String name){return additionalServicesRepository.findByName(name).get();}
     public AdditionalService getById(long id){return additionalServicesRepository.findById(id).get();}

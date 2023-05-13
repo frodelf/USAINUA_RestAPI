@@ -10,5 +10,4 @@ public interface ProductsService {
     Product getByLink(String link);
     void deleteById(Long id);
     Product getById(long id);
-    List<Product> getLast3();
 }

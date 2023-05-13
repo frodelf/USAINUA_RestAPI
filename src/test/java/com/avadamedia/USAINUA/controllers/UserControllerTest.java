@@ -2,7 +2,9 @@ package com.avadamedia.USAINUA.controllers;
 
 import com.avadamedia.USAINUA.entity.*;
 import com.avadamedia.USAINUA.models.*;
+import com.avadamedia.USAINUA.repositories.CreditCardsRepository;
 import com.avadamedia.USAINUA.repositories.StorageRepository;
+import com.avadamedia.USAINUA.repositories.UsersAddressRepository;
 import com.avadamedia.USAINUA.repositories.UsersRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,10 @@ class UserControllerTest {
     private UsersRepository usersRepository;
     @MockBean
     private StorageRepository storageRepository;
+    @MockBean
+    private CreditCardsRepository creditCardsRepository;
+    @MockBean
+    private UsersAddressRepository usersAddressRepository;
     @Test
     @WithMockUser(username = "derkach2007artem@gmail.com")
     void addPersonalData() {

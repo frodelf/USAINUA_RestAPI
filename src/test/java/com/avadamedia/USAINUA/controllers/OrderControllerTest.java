@@ -7,10 +7,7 @@ import com.avadamedia.USAINUA.entity.UsersAddress;
 import com.avadamedia.USAINUA.enums.Status;
 import com.avadamedia.USAINUA.models.OrderDTO;
 import com.avadamedia.USAINUA.models.UserAddressDTO;
-import com.avadamedia.USAINUA.repositories.AdditionalServicesRepository;
-import com.avadamedia.USAINUA.repositories.OrdersRepository;
-import com.avadamedia.USAINUA.repositories.UsersAddressRepository;
-import com.avadamedia.USAINUA.repositories.UsersRepository;
+import com.avadamedia.USAINUA.repositories.*;
 import com.avadamedia.USAINUA.services.impl.OrdersServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +30,14 @@ class OrderControllerTest {
     private OrdersServiceImpl ordersService;
     @Autowired
     private OrdersController ordersController;
-
     @MockBean
     private UsersRepository usersRepository;
     @MockBean
     private UsersAddressRepository usersAddressRepository;
     @MockBean
     private AdditionalServicesRepository additionalServicesRepository;
+    @MockBean
+    private FinancesRepository financesRepository;
     @MockBean
     private OrdersRepository ordersRepository;
 
@@ -123,7 +121,7 @@ class OrderControllerTest {
         when(ordersRepository.findById(1L)).thenReturn(Optional.of(order));
         when(usersRepository.findByEmail("derkach2007artem@gmail.com")).thenReturn(Optional.of(user));
 
-        ordersService.payOrder(1L);
+        ordersController.payOrder(1L);
 
         assertEquals(Status.PAID, order.getStatus());
         assertEquals(100.0, user.getMoney());
@@ -153,7 +151,7 @@ class OrderControllerTest {
         when(usersAddressRepository.findById(idAddress)).thenReturn(Optional.of(usersAddress));
         when(additionalServicesRepository.findById(anyLong())).thenReturn(Optional.of(additionalServices.get(0)));
 
-        ordersService.addOrder(orderDTO, idAdditionalServices, idAddress);
+        ordersController.addOrder(orderDTO, idAdditionalServices, idAddress);
 
         verify(usersRepository, times(1)).save(user);
         verify(additionalServicesRepository, times(idAdditionalServices.size())).findById(anyLong());

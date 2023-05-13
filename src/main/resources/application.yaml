@@ -1,10 +1,4 @@
 server:
-  mvc:
-    view:
-      redirects:
-        contextRelative: true
-      prefix: /swagger-ui/
-      suffix: index.html
   contextPath: /USAINUA_RestAPI
   servlet:
     context-path: /USAINUA_RestAPI

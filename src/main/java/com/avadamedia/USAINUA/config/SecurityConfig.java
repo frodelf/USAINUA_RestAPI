@@ -35,6 +35,9 @@ public class SecurityConfig {
                 .antMatchers("/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .formLogin(login -> {
+                    login.loginPage("/swagger-ui/index.html");
+                })
                 .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();

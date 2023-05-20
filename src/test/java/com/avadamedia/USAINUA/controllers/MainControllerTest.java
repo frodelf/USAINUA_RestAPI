@@ -34,14 +34,14 @@ class MainControllerTest {
     @Test
     void purchaseAndDeliveryApproximatePrice() {
         Assertions.assertEquals(1085, mainController.purchaseAndDeliveryApproximatePrice("plane", new ArrayList<AdditionalService>(), 100, 350));
-        Assertions.assertEquals(547.5, mainController.purchaseAndDeliveryApproximatePrice("ship", new ArrayList<AdditionalService>(), 100, 350));
+        Assertions.assertEquals(559.5, mainController.purchaseAndDeliveryApproximatePrice("ship", new ArrayList<AdditionalService>(Arrays.asList(new AdditionalService(1L, "asdf", 12))), 100, 350));
         Assertions.assertEquals(800, mainController.purchaseAndDeliveryApproximatePrice("another", new ArrayList<AdditionalService>(), 100, 350));
     }
 
     @Test
     void deliveryApproximatePrice() {
         Assertions.assertEquals(1050, mainController.deliveryApproximatePrice("plane", new ArrayList<AdditionalService>(), 100));
-        Assertions.assertEquals(530, mainController.deliveryApproximatePrice("ship", new ArrayList<AdditionalService>(), 100));
+        Assertions.assertEquals(542, mainController.deliveryApproximatePrice("ship", new ArrayList<AdditionalService>(Arrays.asList(new AdditionalService(1L, "asdf", 12))), 100));
         Assertions.assertEquals(800, mainController.deliveryApproximatePrice("another", new ArrayList<AdditionalService>(), 100));
     }
 

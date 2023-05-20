@@ -46,7 +46,8 @@ public class MainController {
         double approximatePrice = 0;
 
         for (AdditionalService additionalService : additionalServices) {
-        approximatePrice+=additionalService.getPrice();}
+        approximatePrice+=additionalService.getPrice();
+        }
         if(transport.equals("plane"))approximatePrice += 0.1*price+0.5*weight+1000;
         else if(transport.equals("ship"))approximatePrice += 0.05*price+0.3*weight+500;
         else approximatePrice += 800;

@@ -12,7 +12,9 @@ import org.hibernate.validator.constraints.URL;
 public class ShopDTO {
     @URL(message = "Посилання на магазин має бути URL-адресою")
     @NotBlank(message = "Посилання на продукт не може бути порожнім")
+    @Schema(defaultValue = "https://chat.openai.com/")
     private String link;
     @NotBlank(message = "Фотографія магазину не може бути порожньою")
+    @Schema(defaultValue = "imageName")
     private String imageName;
 }

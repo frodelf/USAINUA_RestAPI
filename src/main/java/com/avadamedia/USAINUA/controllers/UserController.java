@@ -6,6 +6,8 @@ import com.avadamedia.USAINUA.models.*;
 import com.avadamedia.USAINUA.services.impl.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
@@ -34,40 +36,64 @@ public class UserController {
     private final StorageMapper storageMapper;
     private final FinancesMapper financesMapping;
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    })
     @Operation(summary = "Update the personal data by user")
-    @PostMapping("personal-data")
+    @PostMapping("add-personal-data")
     public void addPersonalData(@RequestBody @Valid UserDTO userDTO){
         UsersMapper usersMapper = new UsersMapper(usersService);
         usersService.save(usersMapper.toEntity(userDTO));
     }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    })
     @Operation(summary = "Get all the finances by user")
-    @GetMapping("finances")
+    @GetMapping("get-all-finances")
     public List<FinancesDTO> getAllFinances(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return financesMapping.toDtoList(usersService.getByEmail(authentication.getName()).getFinances());
     }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    })
     @GetMapping("get-money")
     @Operation(summary = "Get the money by user")
     public double getMoney(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return usersService.getByEmail(authentication.getName()).getMoney();
     }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    })
     @Operation(summary = "Update the money by user")
-    @PostMapping("add-money")
+    @PutMapping("add-money")
     public void addMoney(
-            @Parameter(description = "The money to be deducted from the user's balance")
+            @Parameter(description = "Money that will be added to the user's balance")
             @RequestParam("sum")double sum){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = usersService.getByEmail(authentication.getName());
         user.setMoney(user.getMoney()+sum);
         usersService.save(user);
     }
-    @Operation(summary = "Get the credit card by user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    })
+    @Operation(summary = "Get all the user's credit cards")
     @GetMapping("get-credit-cards")
     public List<CreditCardDTO> getAllCreditCards(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return creditCardMapper.toDtoList(usersService.getByEmail(authentication.getName()).getCreditCards());
     }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    })
     @Operation(summary = "Add the credit card for user")
     @PostMapping("add-card")
     public void addCard(@RequestBody @Valid CreditCardDTO creditCardDTO){
@@ -78,8 +104,12 @@ public class UserController {
         user.getCreditCards().add(cards);
         usersService.save(user);
     }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    })
     @Operation(summary = "Add the address for user")
-    @PostMapping("add-users-address")
+    @PutMapping("add-users-address")
     public void addUsersAddress(@RequestBody @Valid UserAddressDTO userAddressDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = usersService.getByEmail(authentication.getName());
@@ -88,6 +118,10 @@ public class UserController {
         user.getUsersAddresses().add(address);
         usersService.save(user);
     }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    })
     @Operation(summary = "Get storages")
     @GetMapping("get-storages")
     public List<StorageDTO> getAllStorages(){

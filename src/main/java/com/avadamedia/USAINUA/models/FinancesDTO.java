@@ -18,9 +18,11 @@ public class FinancesDTO {
     @Temporal(TemporalType.DATE)
     @NotNull(message = "Дата оплачення посилки(Finances) не була вказана")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Schema(defaultValue = "2000-12-12")
     private Date date;
 
     @DecimalMin(value = "0.0", message = "Загальна ціна посилки (Finances) повинна бути більша нуля")
     @NotNull(message = "Ціна посилки (Finances) не була вказана")
+    @Schema(defaultValue = "12")
     private double sum;
 }

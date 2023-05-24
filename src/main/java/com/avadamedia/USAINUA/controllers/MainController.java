@@ -11,6 +11,8 @@ import com.avadamedia.USAINUA.repositories.ProductsRepository;
 import com.avadamedia.USAINUA.repositories.ShopsRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +29,12 @@ import java.util.List;
 @Tag(name = "Main controller", description = "Main API")
 @SecurityRequirement(name = "bearerAuth")
 public class MainController {
-    private final ShopsRepository shopsRepository;
-    private final ProductsRepository productsRepository;
-    private final ShopMapper shopMapper;
-    private final ProductMapper productMapper;
-
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    })
     @Operation(summary = "Purchase and delivery approximate price")
-    @PostMapping("/purchase-and-delivery/")
+    @PostMapping("/approximate-price/purchase-and-delivery/")
     public double purchaseAndDeliveryApproximatePrice(
             @Parameter(description = "Transport for approximate shipping cost")
             @RequestParam("transport")String transport,
@@ -53,9 +54,12 @@ public class MainController {
         else approximatePrice += 800;
         return approximatePrice;
     }
-
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    })
     @Operation(summary = "Delivery approximate price")
-    @PostMapping("/delivery/")
+    @PostMapping("/approximate-price/delivery/")
     public double deliveryApproximatePrice(
             @Parameter(description = "Transport for approximate shipping cost")
             @RequestParam("transport")String transport,
@@ -70,21 +74,5 @@ public class MainController {
         else if(transport.equals("ship"))approximatePrice += 0.3*weight+500;
         else approximatePrice += 800;
         return approximatePrice;
-    }
-    @Operation(summary = "Get shops")
-    @GetMapping("/shops/{id}")
-    public List<ShopDTO> getAllShops(
-            @Parameter(description = "ID of the page requested for shops")
-            @PathVariable("id")long id){
-        Page<Shop> shopsPage = shopsRepository.findAll(PageRequest.of((int)(id-1), 2));
-        return shopMapper.toDtoList(shopsPage.getContent());
-    }
-    @Operation(summary = "Get products")
-    @GetMapping("/products/{id}")
-    public List<ProductDTO> getAllProducts(
-            @Parameter(description = "ID of the page requested for products")
-            @PathVariable("id")long id){
-        Page<Product> productsPage = productsRepository.findAll(PageRequest.of((int)(id-1), 2));
-        return productMapper.toDtoList(productsPage.getContent());
     }
 }

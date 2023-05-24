@@ -27,6 +27,10 @@ import static org.mockito.Mockito.when;
 class MainControllerTest {
     @Autowired
     private MainController mainController;
+    @Autowired
+    private ShopController shopController;
+    @Autowired
+    private ProductController productController;
     @MockBean
     private ProductsRepository productsRepository;
     @MockBean
@@ -56,7 +60,7 @@ class MainControllerTest {
 
         when(productsRepository.findAll(PageRequest.of((int)(id-1), 2))).thenReturn(productsPage);
 
-        List<ProductDTO> productDTOList = mainController.getAllProducts(id);
+        List<ProductDTO> productDTOList = productController.getAllProducts(id);
 
         assertEquals(2, productDTOList.size());
         assertEquals("ball1", productDTOList.get(0).getName());
@@ -81,7 +85,7 @@ class MainControllerTest {
 
         when(shopsRepository.findAll(PageRequest.of((int)(id-1), 2))).thenReturn(shopsPage);
 
-        List<ShopDTO> shopDTOList = mainController.getAllShops(id);
+        List<ShopDTO> shopDTOList = shopController.getAllShops(id);
 
         assertEquals(2, shopDTOList.size());
         assertEquals("Shop1", shopDTOList.get(0).getLink());

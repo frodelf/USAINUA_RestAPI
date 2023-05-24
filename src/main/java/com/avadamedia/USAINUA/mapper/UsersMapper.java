@@ -17,7 +17,7 @@ public class UsersMapper {
 
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
-        user.setBirthday(userDTO.getDate());
+        user.setBirthday(userDTO.getBirthday());
         user.setIsMan(userDTO.getIsMan());
         user.setPhone(userDTO.getPhone());
         user.setEmail(userDTO.getEmail());

@@ -40,7 +40,7 @@ public class AuthorizationController {
             user1.setEmail(email);
             user1.setPassword(passwordEncoder.encode(String.valueOf(password)));
             List<Role> roles = new ArrayList<>();
-            roles.add(rolesService.getById(1));
+            roles.add(rolesService.getById(2));
             user1.setRoles(roles);
             usersRepository.save(user1);
         }
@@ -54,7 +54,7 @@ public class AuthorizationController {
     public JwtResponse login(@RequestBody JwtRequest loginRequest){
         return authService.login(loginRequest);
     }
-    @PostMapping("/refresh")
+    @PutMapping("/refresh")
     @Operation(summary = "Update the access token")
     public JwtResponse refresh(
             @Parameter(description = "Refresh token")

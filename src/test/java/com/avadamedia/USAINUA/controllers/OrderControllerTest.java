@@ -63,7 +63,7 @@ class OrderControllerTest {
 
         when(usersRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
 
-        List<OrderDTO> orderDTO = ordersController.getAllOrders();
+        List<OrderDTO> orderDTO = ordersController.getAllOrders(1);
 
         assertEquals(2, orderDTO.size());
         assertEquals(10, orderDTO.get(0).getPrice());

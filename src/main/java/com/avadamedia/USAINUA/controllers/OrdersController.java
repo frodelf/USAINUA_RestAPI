@@ -39,6 +39,8 @@ public class OrdersController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
     })
     @GetMapping("get-all-orders/{id}")
     @Operation(summary = "Get all orders")
@@ -49,23 +51,11 @@ public class OrdersController {
         Page<Order> orderPage = new PageImpl<>(orders, PageRequest.of((int)(id-1), 2), orders.size());
         return orderMapper.toDtoList(orderPage.getContent());
     }
+
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
-    })
-    @PutMapping("edit-users-address/{id}")
-    @Operation(summary = "Edit user's address")
-    public void editUsersAddress(
-            @Parameter(description = "User address id")
-            @PathVariable("id")Long id,
-            @Parameter(description = "User's address body for the user") @RequestBody UserAddressDTO addressDTO){
-        UsersAddress address = userAddressMapper.toEntity(addressDTO);
-        address.setId(id);
-        usersAddressService.save(address);
-    }
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "400", description = "Invalid input data"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
     })
     @GetMapping("order/{id}")
     @Operation(summary = "Get order by id")
@@ -77,6 +67,8 @@ public class OrdersController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
     })
     @PostMapping("pay-order/{id}")
     @Operation(summary = "Pay for the order")
@@ -88,10 +80,12 @@ public class OrdersController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
     })
     @PostMapping("make-order")
     @Operation(summary = "Make order")
-    public void addOrder(@RequestBody @Parameter(description = "Order body for the user") @Valid OrderDTO orderDTO,
+    public void addOrder(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Order body for the user") @RequestBody @Valid OrderDTO orderDTO,
                          @Parameter(description = "List of id for additional services")
                          @RequestParam("additional-services") List<Long> idAdditionalServices,
                          @Parameter(description = "User address id")

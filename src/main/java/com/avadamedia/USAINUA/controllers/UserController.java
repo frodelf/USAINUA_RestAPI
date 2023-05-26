@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -39,16 +40,21 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
     })
     @Operation(summary = "Update the personal data by user")
     @PostMapping("add-personal-data")
-    public void addPersonalData(@RequestBody @Valid UserDTO userDTO){
+    @PreAuthorize("isAuthenticated()")
+    public void addPersonalData(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "additional information about the user")@RequestBody @Valid UserDTO userDTO){
         UsersMapper usersMapper = new UsersMapper(usersService);
         usersService.save(usersMapper.toEntity(userDTO));
     }
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
     })
     @Operation(summary = "Get all the finances by user")
     @GetMapping("get-all-finances")
@@ -59,9 +65,12 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
     })
     @GetMapping("get-money")
     @Operation(summary = "Get the money by user")
+    @PreAuthorize("isAuthenticated()")
     public double getMoney(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return usersService.getByEmail(authentication.getName()).getMoney();
@@ -69,6 +78,8 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
     })
     @Operation(summary = "Update the money by user")
     @PutMapping("add-money")
@@ -83,6 +94,8 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
     })
     @Operation(summary = "Get all the user's credit cards")
     @GetMapping("get-credit-cards")
@@ -93,10 +106,12 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
     })
     @Operation(summary = "Add the credit card for user")
     @PostMapping("add-card")
-    public void addCard(@RequestBody @Valid CreditCardDTO creditCardDTO){
+    public void addCard(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "credit card body for the user")@RequestBody @Valid CreditCardDTO creditCardDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = usersService.getByEmail(authentication.getName());
         CreditCard cards = creditCardMapper.toEntity(creditCardDTO);
@@ -107,10 +122,12 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
     })
     @Operation(summary = "Add the address for user")
     @PutMapping("add-users-address")
-    public void addUsersAddress(@RequestBody @Valid UserAddressDTO userAddressDTO){
+    public void addUsersAddress(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User's address body for the user") @RequestBody @Valid UserAddressDTO userAddressDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = usersService.getByEmail(authentication.getName());
         UsersAddress address = userAddressMapper.toEntity(userAddressDTO);
@@ -121,6 +138,23 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
+    })
+    @PutMapping("edit-user-address/{id}")
+    @Operation(summary = "Edit user's address")
+    public void editUsersAddress(
+            @Parameter(description = "User address id")
+            @PathVariable("id")Long id,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User's address body for the user") @RequestBody UserAddressDTO addressDTO){
+        UsersAddress address = userAddressMapper.toEntity(addressDTO);
+        address.setId(id);
+        usersAddressService.save(address);
+    }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
     })
     @Operation(summary = "Get storages")
     @GetMapping("get-storages")

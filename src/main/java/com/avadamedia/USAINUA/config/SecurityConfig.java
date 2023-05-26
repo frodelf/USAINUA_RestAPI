@@ -3,17 +3,23 @@ package com.avadamedia.USAINUA.config;
 import com.avadamedia.USAINUA.jwt.JwtTokenFilter;
 import com.avadamedia.USAINUA.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 @RequiredArgsConstructor
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -35,11 +41,11 @@ public class SecurityConfig {
                 .antMatchers("/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin(login -> {
-                    login.loginPage("/swagger-ui/index.html");
-                })
-                .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
         return httpSecurity.build();
     }
+
 }

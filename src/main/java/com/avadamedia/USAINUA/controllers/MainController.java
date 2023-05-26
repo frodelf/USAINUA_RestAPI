@@ -32,6 +32,7 @@ public class MainController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
     })
     @Operation(summary = "Purchase and delivery approximate price")
     @PostMapping("/approximate-price/purchase-and-delivery/")
@@ -57,6 +58,7 @@ public class MainController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
     })
     @Operation(summary = "Delivery approximate price")
     @PostMapping("/approximate-price/delivery/")

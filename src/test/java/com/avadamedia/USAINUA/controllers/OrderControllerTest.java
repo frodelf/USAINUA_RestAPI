@@ -72,23 +72,6 @@ class OrderControllerTest {
         assertEquals("order 2", orderDTO.get(1).getDescription());
     }
 
-
-    @Test
-    void editUsersAddress() {
-        UserAddressDTO userAddressDTO = new UserAddressDTO();
-        userAddressDTO.setAddressName("home");
-        userAddressDTO.setUsersName("edit");
-        userAddressDTO.setUsersSurname("edit");
-        userAddressDTO.setCity("City");
-        userAddressDTO.setPhone("098789087");
-        userAddressDTO.setDepartment("qwerty");
-        userAddressDTO.setRegion("weqr");
-
-        ordersController.editUsersAddress(1L, userAddressDTO);
-
-        verify(usersAddressRepository, times(1)).save(any());
-    }
-
     @Test
     void getOrderById() {
         long id = 1;

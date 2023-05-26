@@ -38,24 +38,4 @@ public class ApplicationConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
-//    @Bean
-//    public OpenAPI openAPI() {
-//        return new OpenAPI()
-//            .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-//            .components(
-//                new Components()
-//                    .addSecuritySchemes("bearerAuth",
-//                    new SecurityScheme()
-//                        .type(SecurityScheme.Type.HTTP)
-//                        .scheme("bearer")
-//                        .bearerFormat("JWT")
-//                    )
-//                )
-//            .info(new Info()
-//                .title("Task list API")
-//                .description("Demo Spring Boot application")
-//                .version("1.0")
-//            );
-//    }
 }

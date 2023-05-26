@@ -155,4 +155,20 @@ class UserControllerTest {
         assertEquals("1234567890", storageDTO.get(0).getPhone());
         assertEquals("0987654321", storageDTO.get(1).getPhone());
     }
+
+    @Test
+    void editUsersAddress() {
+        UserAddressDTO userAddressDTO = new UserAddressDTO();
+        userAddressDTO.setAddressName("home");
+        userAddressDTO.setUsersName("edit");
+        userAddressDTO.setUsersSurname("edit");
+        userAddressDTO.setCity("City");
+        userAddressDTO.setPhone("098789087");
+        userAddressDTO.setDepartment("qwerty");
+        userAddressDTO.setRegion("weqr");
+
+        userController.editUsersAddress(1L, userAddressDTO);
+
+        verify(usersAddressRepository, times(1)).save(any());
+    }
 }

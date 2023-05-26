@@ -30,7 +30,7 @@ public class AuthorizationController {
     private final RolesServiceImpl rolesService;
     @GetMapping("/get-password")
     @Operation(summary = "Get password for user by email")
-    public void getPassword(@RequestParam("email")String email){
+    public void getPassword( @RequestParam("email")String email){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         int password = (int) (Math.random() * 9000 + 1000);
         EmailUtil.sendEmail("20denisderkach04@gmail.com", email, password);

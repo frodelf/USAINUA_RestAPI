@@ -4,6 +4,7 @@ import com.avadamedia.USAINUA.entity.Product;
 import com.avadamedia.USAINUA.mapper.ProductMapper;
 import com.avadamedia.USAINUA.models.ProductDTO;
 import com.avadamedia.USAINUA.repositories.ProductsRepository;
+import com.avadamedia.USAINUA.services.impl.ProductsServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +29,7 @@ import java.util.List;
 @Tag(name = "Product controller", description = "Product API")
 public class ProductController {
     private final ProductMapper productMapper;
-    private final ProductsRepository productsRepository;
+    private final ProductsServiceImpl productsService;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
@@ -40,7 +42,13 @@ public class ProductController {
     public List<ProductDTO> getAllProducts(
             @Parameter(description = "product's ID")
             @PathVariable("id")long id){
-        Page<Product> productsPage = productsRepository.findAll(PageRequest.of((int)(id-1), 2));
+        List<Product> products = productsService.getAll();
+        Page<Product> productsPage = new PageImpl<>(products, PageRequest.of((int)(id-1), 2), products.size());
         return productMapper.toDtoList(productsPage.getContent());
     }
 }
+/*
+List<Shop> shops = shopsService.getAll();
+        Page<Shop> shopsPage = new PageImpl<>(shops, PageRequest.of((int)(id-1), 2), shops.size());
+        return shopMapper.toDtoList(shopsPage.getContent());
+ */

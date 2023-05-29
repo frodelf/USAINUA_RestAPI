@@ -62,4 +62,5 @@ public class AuthorizationController {
         log.info(refreshToken);
         return authService.refresh(refreshToken);
     }
+
 }

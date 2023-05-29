@@ -3,6 +3,8 @@ package com.avadamedia.USAINUA.services.impl;
 import com.avadamedia.USAINUA.entity.Stats;
 import com.avadamedia.USAINUA.repositories.StatsRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,9 +17,9 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class StatsServiceImplTest {
-    @MockBean
+    @Mock
     private StatsRepository statsRepository;
-    @Autowired
+    @InjectMocks
     private StatsServiceImpl statsService;
     @Test
     void getAllMonth() {

@@ -5,6 +5,7 @@ import com.avadamedia.USAINUA.entity.Order;
 import com.avadamedia.USAINUA.entity.User;
 import com.avadamedia.USAINUA.entity.UsersAddress;
 import com.avadamedia.USAINUA.enums.Status;
+import com.avadamedia.USAINUA.mapper.OrderMapper;
 import com.avadamedia.USAINUA.models.OrderDTO;
 import com.avadamedia.USAINUA.repositories.*;
 import org.junit.jupiter.api.Test;
@@ -24,18 +25,20 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class OrdersServiceImplTest {
-    @MockBean
-    private OrdersRepository ordersRepository;
-    @MockBean
-    private UsersRepository usersRepository;
-    @Autowired
+    @InjectMocks
     private OrdersServiceImpl ordersService;
-    @MockBean
-    private UsersAddressRepository usersAddressRepository;
-    @MockBean
-    private AdditionalServicesRepository additionalServicesRepository;
-    @MockBean
-    private FinancesRepository financesRepository;
+    @Mock
+    private UsersServiceImpl usersService;
+    @Mock
+    private FinancesServiceImpl financesService;
+    @Mock
+    private UsersAddressServiceImpl usersAddressService;
+    @Mock
+    private AdditionalServicesServiceImpl additionalServicesService;
+    @Mock
+    private OrdersRepository ordersRepository;
+    @Mock
+    private OrderMapper orderMapper;
 
     @Test
     void save() {
@@ -67,7 +70,7 @@ class OrdersServiceImplTest {
         user.setFinances(new ArrayList<>());
 
         when(ordersRepository.findById(1L)).thenReturn(Optional.of(order));
-        when(usersRepository.findByEmail("derkach2007artem@gmail.com")).thenReturn(Optional.of(user));
+        when(usersService.getByEmail(any())).thenReturn(user);
 
         ordersService.payOrder(1L);
 
@@ -95,15 +98,16 @@ class OrdersServiceImplTest {
         List<Long> idAdditionalServices = new ArrayList<>();
         idAdditionalServices.add(1L);
 
-        when(usersRepository.findByEmail("derkach2007artem@gmail.com")).thenReturn(Optional.of(user));
-        when(usersAddressRepository.findById(idAddress)).thenReturn(Optional.of(usersAddress));
-        when(additionalServicesRepository.findById(anyLong())).thenReturn(Optional.of(additionalServices.get(0)));
+        when(usersService.getByEmail(anyString())).thenReturn(user);
+        when(usersAddressService.getById(anyLong())).thenReturn(usersAddress);
+        when(additionalServicesService.getById(anyLong())).thenReturn(additionalServices.get(0));
+        when(orderMapper.toEntity(any())).thenReturn(new Order());
 
         ordersService.addOrder(orderDTO, idAdditionalServices, idAddress);
 
-        verify(usersRepository, times(1)).save(user);
-        verify(additionalServicesRepository, times(idAdditionalServices.size())).findById(anyLong());
-        verify(usersAddressRepository, times(1)).findById(idAddress);
+        verify(usersService, times(1)).save(user);
+        verify(additionalServicesService, times(idAdditionalServices.size())).getById(anyLong());
+        verify(usersAddressService, times(1)).getById(idAddress);
         verify(ordersRepository, times(1)).save(any());
 
         assertEquals(1, user.getOrders().size());

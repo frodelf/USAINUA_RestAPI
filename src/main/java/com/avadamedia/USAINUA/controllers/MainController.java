@@ -9,6 +9,7 @@ import com.avadamedia.USAINUA.models.ProductDTO;
 import com.avadamedia.USAINUA.models.ShopDTO;
 import com.avadamedia.USAINUA.repositories.ProductsRepository;
 import com.avadamedia.USAINUA.repositories.ShopsRepository;
+import com.avadamedia.USAINUA.util.CalculatorUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -40,20 +41,13 @@ public class MainController {
             @Parameter(description = "Transport for approximate shipping cost")
             @RequestParam("transport")String transport,
             @Parameter(description = "Additional services list for approximate shipping cost")
-            @RequestParam("additional-services")List<AdditionalService> additionalServices,
+            @RequestBody List<AdditionalService> additionalServices,
             @Parameter(description = "Weight for approximate shipping cost")
             @RequestParam("weight")double weight,
             @Parameter(description = "Products' price for approximate shipping cost")
             @RequestParam("price")double price){
         double approximatePrice = 0;
-
-        for (AdditionalService additionalService : additionalServices) {
-        approximatePrice+=additionalService.getPrice();
-        }
-        if(transport.equals("plane"))approximatePrice += 0.1*price+0.5*weight+1000;
-        else if(transport.equals("ship"))approximatePrice += 0.05*price+0.3*weight+500;
-        else approximatePrice += 800;
-        return approximatePrice;
+        return CalculatorUtil.purchaseAndDeliveryApproximatePrice(weight, additionalServices, transport, price);
     }
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
@@ -66,15 +60,9 @@ public class MainController {
             @Parameter(description = "Transport for approximate shipping cost")
             @RequestParam("transport")String transport,
             @Parameter(description = "Additional services list for approximate shipping cost")
-            @RequestParam("additional-services")List<AdditionalService> additionalServices,
+            @RequestBody List<AdditionalService> additionalServices,
             @Parameter(description = "Weight for approximate shipping cost")
             @RequestParam("weight")double weight){
-        double approximatePrice = 0;
-        for (AdditionalService additionalService : additionalServices) {
-        approximatePrice+=additionalService.getPrice();}
-        if(transport.equals("plane"))approximatePrice += 0.5*weight+1000;
-        else if(transport.equals("ship"))approximatePrice += 0.3*weight+500;
-        else approximatePrice += 800;
-        return approximatePrice;
+        return CalculatorUtil.deliveryApproximatePrice(weight, additionalServices, transport);
     }
 }

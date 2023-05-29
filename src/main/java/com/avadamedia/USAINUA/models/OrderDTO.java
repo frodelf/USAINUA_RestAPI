@@ -9,7 +9,8 @@ import org.hibernate.validator.constraints.URL;
 
 @Data
 @Schema(description = "Order DTO")
-public class OrderDTO {
+public class
+OrderDTO {
     @NotBlank(message = "Транспортне засіб не може бути порожнім")
     @Pattern(regexp = "^(plane|ship|another)$", message = "Транспорт не коректний")
     @Schema(defaultValue = "plane")

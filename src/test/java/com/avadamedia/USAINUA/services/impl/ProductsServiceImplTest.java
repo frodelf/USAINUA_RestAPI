@@ -3,6 +3,8 @@ package com.avadamedia.USAINUA.services.impl;
 import com.avadamedia.USAINUA.entity.Product;
 import com.avadamedia.USAINUA.repositories.ProductsRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 @SpringBootTest
 class ProductsServiceImplTest {
-    @MockBean
+    @Mock
     private ProductsRepository productsRepository;
-    @Autowired
+    @InjectMocks
     private ProductsServiceImpl productsService;
     @Test
     public void save() {

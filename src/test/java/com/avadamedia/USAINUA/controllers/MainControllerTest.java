@@ -8,16 +8,19 @@ import com.avadamedia.USAINUA.models.ProductDTO;
 import com.avadamedia.USAINUA.models.ShopDTO;
 import com.avadamedia.USAINUA.repositories.ProductsRepository;
 import com.avadamedia.USAINUA.repositories.ShopsRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,56 +28,55 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
-
-@WebMvcTest(MainController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class MainControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
-    @WithMockUser(username = "denis.derkach@lll.kpi.ua", roles = {"USER", "ADMIN"})
+    @WithMockUser
     public void testPurchaseAndDeliveryApproximatePrice() throws Exception {
         List<AdditionalService> additionalServices = Arrays.asList(
                 new AdditionalService(1L,"Service 1", 10.0),
                 new AdditionalService(2L, "Service 2", 15.0)
         );
 
+        String additionalServicesJson = objectMapper.writeValueAsString(additionalServices);
+
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/approximate-price/purchase-and-delivery/")
-                        .with(SecurityMockMvcRequestPostProcessors.jwt())
                         .param("transport", "plane")
-                        .param("additional-services", additionalServices.toString())
+                        .content(objectMapper.writeValueAsString(additionalServices))
+                        .contentType(MediaType.APPLICATION_JSON)
                         .param("weight", "10")
                         .param("price", "1200"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("1650.0"));
+                .andExpect(MockMvcResultMatchers.content().string("2230.0"));
     }
 
     @Test
+    @WithMockUser
     public void testDeliveryApproximatePrice() throws Exception {
         List<AdditionalService> additionalServices = Arrays.asList(
                 new AdditionalService(1L, "Service 1", 10.0),
                 new AdditionalService(2L, "Service 2", 15.0)
         );
-        double weight = 20.0;
 
         mockMvc.perform(MockMvcRequestBuilders.post("/approximate-price/delivery/")
                         .param("transport", "ship")
-                        .param("additional-services", additionalServices.toString())
-                        .param("weight", String.valueOf(weight)))
+                        .content(objectMapper.writeValueAsString(additionalServices))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("weight", "20"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("650.0"));
+                .andExpect(MockMvcResultMatchers.content().string("531.0"));
     }
 }
 

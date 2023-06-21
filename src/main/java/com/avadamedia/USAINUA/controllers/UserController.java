@@ -22,7 +22,7 @@ import java.util.List;
 
 @Log4j2
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 @Tag(name = "User Controller", description = "User API")
 @SecurityRequirement(name = "bearerAuth")
@@ -44,7 +44,7 @@ public class UserController {
 
     })
     @Operation(summary = "Update the personal data by user")
-    @PostMapping("add-personal-data")
+    @PostMapping("/add-personal-data")
     @PreAuthorize("isAuthenticated()")
     public void addPersonalData(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "additional information about the user")@RequestBody @Valid UserDTO userDTO){
         UsersMapper usersMapper = new UsersMapper(usersService);
@@ -57,7 +57,7 @@ public class UserController {
 
     })
     @Operation(summary = "Get all the finances by user")
-    @GetMapping("get-all-finances")
+    @GetMapping("/get-all-finances")
     public List<FinancesDTO> getAllFinances(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return financesMapping.toDtoList(usersService.getByEmail(authentication.getName()).getFinances());
@@ -68,7 +68,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Resource not found."),
 
     })
-    @GetMapping("get-money")
+    @GetMapping("/get-money")
     @Operation(summary = "Get the money by user")
     @PreAuthorize("isAuthenticated()")
     public double getMoney(){
@@ -82,7 +82,7 @@ public class UserController {
 
     })
     @Operation(summary = "Update the money by user")
-    @PutMapping("add-money")
+    @PutMapping("/add-money")
     public void addMoney(
             @Parameter(description = "Money that will be added to the user's balance")
             @RequestParam("sum")double sum){
@@ -98,7 +98,7 @@ public class UserController {
 
     })
     @Operation(summary = "Get all the user's credit cards")
-    @GetMapping("get-credit-cards")
+    @GetMapping("/get-credit-cards")
     public List<CreditCardDTO> getAllCreditCards(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return creditCardMapper.toDtoList(usersService.getByEmail(authentication.getName()).getCreditCards());
@@ -110,7 +110,7 @@ public class UserController {
 
     })
     @Operation(summary = "Add the credit card for user")
-    @PostMapping("add-card")
+    @PostMapping("/add-card")
     public void addCard(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "credit card body for the user")@RequestBody @Valid CreditCardDTO creditCardDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = usersService.getByEmail(authentication.getName());
@@ -126,7 +126,7 @@ public class UserController {
 
     })
     @Operation(summary = "Add the address for user")
-    @PutMapping("add-users-address")
+    @PutMapping("/add-users-address")
     public void addUsersAddress(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User's address body for the user") @RequestBody @Valid UserAddressDTO userAddressDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = usersService.getByEmail(authentication.getName());
@@ -141,7 +141,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Resource not found."),
 
     })
-    @PutMapping("edit-user-address/{id}")
+    @PutMapping("/edit-user-address/{id}")
     @Operation(summary = "Edit user's address")
     public void editUsersAddress(
             @Parameter(description = "User address id")
@@ -157,7 +157,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Resource not found."),
     })
     @Operation(summary = "Get storages")
-    @GetMapping("get-storages")
+    @GetMapping("/get-storages")
     public List<StorageDTO> getAllStorages(){
         return storageMapper.toDtoList(storageService.getAll());
     }

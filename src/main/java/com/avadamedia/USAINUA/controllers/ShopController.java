@@ -31,7 +31,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Shop controller", description = "Shop API")
 @SecurityRequirement(name = "bearerAuth")
-@RequestMapping("/shops/")
+@RequestMapping("/shops")
 public class ShopController {
     private final ShopsServiceImpl shopsService;
     private final ShopMapper shopMapper;

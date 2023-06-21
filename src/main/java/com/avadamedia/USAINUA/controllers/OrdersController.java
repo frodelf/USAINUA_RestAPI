@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders/")
+@RequestMapping("/orders")
 @RequiredArgsConstructor
 @Tag(name = "Order Controller", description = "Orders API")
 @SecurityRequirement(name = "bearerAuth")
@@ -42,7 +42,7 @@ public class OrdersController {
             @ApiResponse(responseCode = "404", description = "Resource not found."),
 
     })
-    @GetMapping("get-all-orders/{id}")
+    @GetMapping("/get-all-orders/{id}")
     @Operation(summary = "Get all orders")
     public List<OrderDTO> getAllOrders(@PathVariable("id")long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,7 +57,7 @@ public class OrdersController {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
     })
-    @GetMapping("order/{id}")
+    @GetMapping("/order/{id}")
     @Operation(summary = "Get order by id")
     public OrderDTO getOrderById(
             @Parameter(description = "Order's id")
@@ -70,7 +70,7 @@ public class OrdersController {
             @ApiResponse(responseCode = "404", description = "Resource not found."),
 
     })
-    @PostMapping("pay-order/{id}")
+    @PostMapping("/pay-order/{id}")
     @Operation(summary = "Pay for the order")
     public void payOrder(
             @Parameter(description = "Order's id")

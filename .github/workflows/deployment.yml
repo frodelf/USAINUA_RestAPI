@@ -12,9 +12,9 @@ jobs:
           mvn war:war
       - name: Update application.yaml
         run: |
-          sed -i 's/\${DB_URL}/some_link/g' target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
-          sed -i 's/\${DB_LOGIN}/some_login/g' target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
-          sed -i 's/\${DB_PASSWORD}/some_password/g' target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
+          sed -i -e 's|${DB_URL}|${{ secrets.DB_URL }}|g' target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
+          sed -i -e 's|${DB_LOGIN}|${{ secrets.DB_LOGIN }}|g' target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
+          sed -i -e 's|${DB_PASSWORD}|${{ secrets.DB_PASSWORD }}|g' target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
       - name: Copy folder content recursively to remote
         uses: garygrossgarten/github-action-scp@release
         with:

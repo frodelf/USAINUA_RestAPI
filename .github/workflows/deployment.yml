@@ -10,11 +10,11 @@ jobs:
         run: |
           mvn package -DskipTests=true
           mvn war:war
-      - name: Modify configuration file
+      - name: Update application.yaml
         run: |
-          sed -i "s|${DB_URL}|jdbc:mysql://kino.avada-media-dev1.od.ua:3306/avada_slj_uiu|g" target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
-          sed -i "s|${DB_LOGIN}|lllooogggiiinn|g" target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
-          sed -i "s|${DB_PASSWORD}|ppaasswwoorrdd|g" target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
+          sed -i 's/${DB_URL}/some_link/g' application.yaml
+          sed -i 's/${DB_LOGIN}/some_login/g' application.yaml
+          sed -i 's/${DB_PASSWORD}/some_password/g' application.yaml
       - name: Copy folder content recursively to remote
         uses: garygrossgarten/github-action-scp@release
         with:

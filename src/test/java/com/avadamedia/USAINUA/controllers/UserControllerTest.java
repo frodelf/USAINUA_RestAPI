@@ -62,19 +62,6 @@ public class UserControllerTest {
 
     @MockBean
     private FinancesServiceImpl financesService;
-//
-//    @MockBean
-//    private CreditCardMapper creditCardMapper;
-//
-//    @MockBean
-//    private UserAddressMapper userAddressMapper;
-//
-//    @MockBean
-//    private UsersMapper usersMapper;
-//
-//    @MockBean
-//    private FinancesMapper financesMapping;
-
     @Test
     @WithMockUser("derkach.denis@lll.kpi.ua")
     public void testAddPersonalData() throws Exception {

@@ -3,6 +3,7 @@ package com.avadamedia.USAINUA.controllers;
 import com.avadamedia.USAINUA.entity.Order;
 import com.avadamedia.USAINUA.entity.User;
 import com.avadamedia.USAINUA.models.OrderDTO;
+import com.avadamedia.USAINUA.repositories.UsersRepository;
 import com.avadamedia.USAINUA.services.impl.OrdersServiceImpl;
 import com.avadamedia.USAINUA.services.impl.UsersServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +39,8 @@ public class OrderControllerTest {
 
     @MockBean
     private UsersServiceImpl usersService;
+    @MockBean
+    private UsersRepository usersRepository;
 
     @Test
     @WithMockUser
@@ -116,8 +119,6 @@ public class OrderControllerTest {
         List<Long> idAdditionalServices = Collections.singletonList(1L);
         Long idAddress = 1L;
 
-//        Mockito.doNothing().when(ordersService).addOrder(orderDTO, idAdditionalServices, idAddress);
-
         String requestBody = new ObjectMapper().writeValueAsString(orderDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/orders/make-order")
@@ -126,5 +127,7 @@ public class OrderControllerTest {
                         .param("additional-services", idAdditionalServices.get(0).toString())
                         .param("id-address", idAddress.toString()))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+
+
     }
 }

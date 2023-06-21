@@ -4,6 +4,7 @@ import com.avadamedia.USAINUA.entity.Shop;
 import com.avadamedia.USAINUA.mapper.ShopMapper;
 import com.avadamedia.USAINUA.models.ShopDTO;
 import com.avadamedia.USAINUA.repositories.ShopsRepository;
+import com.avadamedia.USAINUA.repositories.UsersRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,7 @@ class ShopControllerTest {
     private ObjectMapper objectMapper;
     @MockBean
     private ShopsRepository shopsRepository;
+
     @Test
     @WithMockUser
     void getAllShops() throws Exception {

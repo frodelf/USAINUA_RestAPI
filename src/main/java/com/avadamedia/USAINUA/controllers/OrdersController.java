@@ -83,13 +83,12 @@ public class OrdersController {
             @ApiResponse(responseCode = "404", description = "Resource not found."),
 
     })
-    @PostMapping("make-order")
+    @PostMapping("/make-order")
     @Operation(summary = "Make order")
     public void addOrder(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Order body for the user") @RequestBody @Valid OrderDTO orderDTO,
                          @Parameter(description = "List of id for additional services")
                          @RequestParam("additional-services") List<Long> idAdditionalServices,
-                         @Parameter(description = "User address id")
-                             @RequestParam("id-address")Long idAddress){
+                         @Parameter(description = "User address id") @RequestParam("id-address")Long idAddress){
         ordersService.addOrder(orderDTO, idAdditionalServices, idAddress);
     }
 }

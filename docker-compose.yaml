@@ -6,10 +6,10 @@ services:
       context: .
     container_name: USAINUA_restAPI
     environment:
-      - DB_HOST=kino.avada-media-dev1.od.ua
+      - DB_HOST=${SSH_URL}
       - DB_PORT=3306
-      - DB_NAME=avada_kino
-      - DB_USER=avada_kino
-      - DB_PASSWORD=OUlIg40qOZ
+      - DB_NAME=${DB_USER}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
     ports:
       - '8888:8888'

@@ -8,6 +8,7 @@ import com.avadamedia.USAINUA.models.ProductDTO;
 import com.avadamedia.USAINUA.models.ShopDTO;
 import com.avadamedia.USAINUA.repositories.ProductsRepository;
 import com.avadamedia.USAINUA.repositories.ShopsRepository;
+import com.avadamedia.USAINUA.repositories.UsersRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,8 @@ public class MainControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @MockBean
+    private UsersRepository usersRepository;
 
     @Test
     @WithMockUser

@@ -112,7 +112,7 @@
     </dependencies>
 
 	<build>
-		<finalName>USAINUA_RestAPI</finalName>
+		<finalName>USAINUA_RestAPI_Test</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

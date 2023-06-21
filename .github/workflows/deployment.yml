@@ -15,14 +15,14 @@ jobs:
         with:
           local: target/USAINUA_RestAPI
           remote: tomcat/webapps/USAINUA_RestAPI
-          host: kino.avada-media-dev1.od.ua
-          username: avada_kino
-          password: "#Es84!4lZ0P7"
+          host: ${SSH_URL}
+          username: ${SSH_LOGIN}
+          password: ${SSH_PASSWORD}
       - name: Copy single file to remote
         uses: garygrossgarten/github-action-scp@release
         with:
           local: target/USAINUA_RestAPI.war
           remote: tomcat/webapps/USAINUA_RestAPI.war
-          host: kino.avada-media-dev1.od.ua
-          username: avada_kino
-          password: "#Es84!4lZ0P7"
+          host: ${SSH_URL}
+          username: ${SSH_LOGIN}
+          password: ${SSH_PASSWORD}

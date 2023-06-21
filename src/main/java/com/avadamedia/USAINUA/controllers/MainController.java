@@ -29,6 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Main controller", description = "Main API")
 @SecurityRequirement(name = "bearerAuth")
+@RequestMapping("/approximate-price")
 public class MainController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
@@ -36,7 +37,7 @@ public class MainController {
             @ApiResponse(responseCode = "404", description = "Resource not found."),
     })
     @Operation(summary = "Purchase and delivery approximate price")
-    @PostMapping("/approximate-price/purchase-and-delivery/")
+    @PostMapping("/purchase-and-delivery")
     public double purchaseAndDeliveryApproximatePrice(
             @Parameter(description = "Transport for approximate shipping cost")
             @RequestParam("transport")String transport,
@@ -55,7 +56,7 @@ public class MainController {
             @ApiResponse(responseCode = "404", description = "Resource not found."),
     })
     @Operation(summary = "Delivery approximate price")
-    @PostMapping("/approximate-price/delivery/")
+    @PostMapping("/delivery")
     public double deliveryApproximatePrice(
             @Parameter(description = "Transport for approximate shipping cost")
             @RequestParam("transport")String transport,

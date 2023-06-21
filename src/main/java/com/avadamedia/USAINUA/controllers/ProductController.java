@@ -47,8 +47,3 @@ public class ProductController {
         return productMapper.toDtoList(productsPage.getContent());
     }
 }
-/*
-List<Shop> shops = shopsService.getAll();
-        Page<Shop> shopsPage = new PageImpl<>(shops, PageRequest.of((int)(id-1), 2), shops.size());
-        return shopMapper.toDtoList(shopsPage.getContent());
- */

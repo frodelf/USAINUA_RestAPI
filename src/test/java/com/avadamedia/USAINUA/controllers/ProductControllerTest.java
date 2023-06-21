@@ -4,6 +4,7 @@ import com.avadamedia.USAINUA.entity.Product;
 import com.avadamedia.USAINUA.enums.Type;
 import com.avadamedia.USAINUA.repositories.ProductsRepository;
 import com.avadamedia.USAINUA.repositories.ShopsRepository;
+import com.avadamedia.USAINUA.repositories.UsersRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ class ProductControllerTest {
     private ObjectMapper objectMapper;
     @MockBean
     private ProductsRepository productsRepository;
+    @MockBean
+    private UsersRepository usersRepository;
     @Test
     @WithMockUser
     void getAllProducts() throws Exception {

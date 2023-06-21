@@ -10,11 +10,11 @@ jobs:
         run: |
           mvn package -DskipTests=true
           mvn war:war
-      - name: Replace environment variables in application.yaml
+      - name: Update application.yaml
         run: |
-          echo "url: ${{ secrets.DB_URL }}" > application.yaml
-          echo "username: ${{ secrets.DB_LOGIN }}" >> application.yaml
-          echo "password: ${{ secrets.DB_PASSWORD }}" >> application.yaml
+          sed -i 's/\${DB_URL}/some_link/g' target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
+          sed -i 's/\${DB_LOGIN}/some_login/g' target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
+          sed -i 's/\${DB_PASSWORD}/some_password/g' target/USAINUA_RestAPI/WEB-INF/classes/application.yaml
       - name: Copy folder content recursively to remote
         uses: garygrossgarten/github-action-scp@release
         with:

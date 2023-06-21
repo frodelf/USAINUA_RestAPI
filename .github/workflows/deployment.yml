@@ -26,11 +26,3 @@ jobs:
           host: ${{ secrets.SSH_URL }}
           username: ${{ secrets.SSH_LOGIN }}
           password: ${{ secrets.SSH_PASSWORD }}
-      - name: Copy configuration file to remote
-        uses: garygrossgarten/github-action-scp@release
-        with:
-            local: src/main/resources/application-prod.yaml
-            remote: tomcat/webapps/USAINUA_RestAPI/WEB-INF/classes/application.yaml
-            host: ${{ secrets.SSH_URL }}
-            username: ${{ secrets.SSH_LOGIN }}
-            password: ${{ secrets.SSH_PASSWORD }}

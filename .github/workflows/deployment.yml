@@ -10,6 +10,11 @@ jobs:
         run: |
           mvn package -DskipTests=true
           mvn war:war
+      - name: Modify configuration file
+        run: |
+          sed -i "s|${DB_URL}|jdbc:mysql://kino.avada-media-dev1.od.ua:3306/avada_slj_uiu|g" target/USAINUA_RestAPI/WEB-INF/classes/application.properties
+          sed -i "s|${DB_LOGIN}|lllooogggiiinn|g" target/USAINUA_RestAPI/WEB-INF/classes/application.properties
+          sed -i "s|${DB_PASSWORD}|ppaasswwoorrdd|g" target/USAINUA_RestAPI/WEB-INF/classes/application.properties
       - name: Copy folder content recursively to remote
         uses: garygrossgarten/github-action-scp@release
         with:

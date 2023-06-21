@@ -4,9 +4,9 @@ server:
   port: 8888
 spring:
   datasource:
-    url: ${{ secrets.DB_URL }}
-    username: ${{ secrets.DB_LOGIN }}
-    password: ${{ secrets.DB_PASSWORD }}
+    url: ${DB_URL}
+    username: ${DB_LOGIN}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update

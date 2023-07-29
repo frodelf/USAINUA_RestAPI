@@ -1,7 +1,7 @@
 package com.avadamedia.USAINUA.entity;
 
 import com.avadamedia.USAINUA.models.CreditCardDTO;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

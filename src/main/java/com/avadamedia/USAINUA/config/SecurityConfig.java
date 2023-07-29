@@ -31,23 +31,22 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeHttpRequests()
-                .antMatchers("/get-password/**").permitAll()
-                .antMatchers("/refresh/**").permitAll()
-                .antMatchers("/login/**").permitAll()
-                .antMatchers("/swagger-ui/**").permitAll()
-                .antMatchers("/v3/api-docs/**").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/approximate-price/**").authenticated()
-                .antMatchers("/orders/**").authenticated()
-                .antMatchers("/products/**").authenticated()
-                .antMatchers("/shops/**").authenticated()
-                .antMatchers("/user/**").authenticated()
-                .and()
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/get-password/**").permitAll();
+                    auth.requestMatchers("/refresh/**").permitAll();
+                    auth.requestMatchers("/login/**").permitAll();
+                    auth.requestMatchers("/v3/api-docs/**").permitAll();
+                    auth.requestMatchers("/").permitAll();
+                    auth.requestMatchers("/approximate-price/**").authenticated();
+                    auth.requestMatchers("/orders/**").authenticated();
+                    auth.requestMatchers("/products/**").authenticated();
+                    auth.requestMatchers("/shops/**").authenticated();
+                    auth.requestMatchers("/user/**").authenticated();
+                    auth.requestMatchers("/swagger-ui/**").permitAll();
+                })
                 .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
-
         return httpSecurity.build();
     }
 

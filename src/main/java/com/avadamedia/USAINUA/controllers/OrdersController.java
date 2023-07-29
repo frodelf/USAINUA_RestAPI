@@ -6,7 +6,7 @@ import com.avadamedia.USAINUA.mapper.UserAddressMapper;
 import com.avadamedia.USAINUA.models.OrderDTO;
 import com.avadamedia.USAINUA.models.UserAddressDTO;
 import com.avadamedia.USAINUA.services.impl.*;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -15,7 +15,9 @@ public class UsersServiceImpl implements UsersService {
 
     public void save(User user){usersRepository.save(user);}
     public User getById(long id){return usersRepository.findById(id).get();}
-    public User getByEmail(String email){return usersRepository.findByEmail(email).get();}
+    public User getByEmail(String email){
+        return usersRepository.findByEmail(email).get();
+    }
     public List<User> getAllMan(){return usersRepository.findByIsManIsTrue();}
     public List<User> getAllWoman(){return usersRepository.findByIsManIsFalse();}
     public List<User> getAll(){return usersRepository.findAll();}

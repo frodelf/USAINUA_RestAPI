@@ -33,4 +33,31 @@ public class CustomExceptionHandler {
 
         return responseBody;
     }
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public Map<String, Object> handleIllegalArgumentException(IllegalArgumentException ex, HttpServletRequest request) {
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("timestamp", new Date());
+        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("error", "Validation error");
+        responseBody.put("path", request.getRequestURI());
+
+        List<Map<String, String>> errors = new ArrayList<>();
+        Map<String, String> error = new HashMap<>();
+        error.put("field", "number");
+        error.put("message", ex.getMessage());
+        errors.add(error);
+        responseBody.put("errors", errors);
+
+        StackTraceElement[] stackTrace = ex.getStackTrace();
+        if (stackTrace.length > 0) {
+            String className = stackTrace[0].getClassName();
+            String methodName = stackTrace[0].getMethodName();
+            responseBody.put("class", className);
+            responseBody.put("method", methodName);
+        }
+
+        return responseBody;
+    }
 }

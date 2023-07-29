@@ -32,18 +32,22 @@ public class ProductController {
     private final ProductsServiceImpl productsService;
 
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
 
     })
-    @Operation(summary = "Get products")
-    @GetMapping("/get-product/{id}")
+    @Operation(summary = "Get all products")
+    @GetMapping("/get-product/{page}")
     public List<ProductDTO> getAllProducts(
-            @Parameter(description = "product's ID")
-            @PathVariable("id")long id){
+            @Parameter(description = "Page for pagination")
+            @PathVariable("page")long page){
+        if (page < 0) {
+            throw new IllegalArgumentException("Число має бути більше 0");
+        }
         List<Product> products = productsService.getAll();
-        Page<Product> productsPage = new PageImpl<>(products, PageRequest.of((int)(id-1), 2), products.size());
+        Page<Product> productsPage = new PageImpl<>(products, PageRequest.of((int)(page-1), 2), products.size());
         return productMapper.toDtoList(productsPage.getContent());
     }
 }

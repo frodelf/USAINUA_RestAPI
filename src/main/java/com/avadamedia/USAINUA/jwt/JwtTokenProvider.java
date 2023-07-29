@@ -73,8 +73,8 @@ public class JwtTokenProvider {
         }
         Long userId = Long.valueOf(getId(refreshToken));
         User user = usersService.getById(userId);
-        jwtResponse.setId(userId);
-        jwtResponse.setUsername(user.getEmail());
+//        jwtResponse.setId(userId);
+//        jwtResponse.setUsername(user.getEmail());
         jwtResponse.setAccessToken(createAccessToken(userId, user.getEmail(), user.getRoles()));
         jwtResponse.setRefreshToken(createRefreshToken(userId, user.getEmail()));
         return jwtResponse;

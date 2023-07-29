@@ -32,6 +32,7 @@ import java.util.List;
 @RequestMapping("/approximate-price")
 public class MainController {
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
@@ -51,6 +52,7 @@ public class MainController {
         return CalculatorUtil.purchaseAndDeliveryApproximatePrice(weight, additionalServices, transport, price);
     }
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),

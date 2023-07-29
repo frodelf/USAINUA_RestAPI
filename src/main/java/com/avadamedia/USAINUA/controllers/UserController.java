@@ -38,6 +38,7 @@ public class UserController {
     private final FinancesMapper financesMapping;
 
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
@@ -51,6 +52,7 @@ public class UserController {
         usersService.save(usersMapper.toEntity(userDTO));
     }
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
@@ -63,6 +65,7 @@ public class UserController {
         return financesMapping.toDtoList(usersService.getByEmail(authentication.getName()).getFinances());
     }
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
@@ -76,6 +79,7 @@ public class UserController {
         return usersService.getByEmail(authentication.getName()).getMoney();
     }
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
@@ -92,6 +96,7 @@ public class UserController {
         usersService.save(user);
     }
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
@@ -104,6 +109,7 @@ public class UserController {
         return creditCardMapper.toDtoList(usersService.getByEmail(authentication.getName()).getCreditCards());
     }
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
@@ -120,6 +126,7 @@ public class UserController {
         usersService.save(user);
     }
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
@@ -136,6 +143,7 @@ public class UserController {
         usersService.save(user);
     }
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
@@ -152,6 +160,7 @@ public class UserController {
         usersAddressService.save(address);
     }
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),

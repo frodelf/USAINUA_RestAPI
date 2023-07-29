@@ -11,6 +11,8 @@ import com.avadamedia.USAINUA.services.impl.RolesServiceImpl;
 import com.avadamedia.USAINUA.util.EmailUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,6 +30,13 @@ public class AuthorizationController {
     private final AuthService authService;
     private final UsersRepository usersRepository;
     private final RolesServiceImpl rolesService;
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
+    })
     @GetMapping("/get-password")
     @Operation(summary = "Get password for user by email")
     public void getPassword( @RequestParam("email")String email){
@@ -49,11 +58,25 @@ public class AuthorizationController {
             usersRepository.save(users.get());
         }
     }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
+    })
     @Operation(summary = "Authorization user")
     @PostMapping("/login")
     public JwtResponse login(@RequestBody JwtRequest loginRequest){
         return authService.login(loginRequest);
     }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+
+    })
     @PutMapping("/refresh")
     @Operation(summary = "Update the access token")
     public JwtResponse refresh(

@@ -37,22 +37,29 @@ public class OrdersController {
     private final OrderMapper orderMapper;
 
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
 
     })
-    @GetMapping("/get-all-orders/{id}")
+    @GetMapping("/get-all-orders/{page}")
     @Operation(summary = "Get all orders")
-    public List<OrderDTO> getAllOrders(@PathVariable("id")long id){
+    public List<OrderDTO> getAllOrders(
+            @Parameter(description = "Page for pagination")
+            @PathVariable("page")long page){
+        if (page < 0) {
+            throw new IllegalArgumentException("Число має бути більше 0");
+        }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         List<Order> orders = usersService.getByEmail(authentication.getName()).getOrders();
-        Page<Order> orderPage = new PageImpl<>(orders, PageRequest.of((int)(id-1), 2), orders.size());
+        Page<Order> orderPage = new PageImpl<>(orders, PageRequest.of((int)(page-1), 2), orders.size());
         return orderMapper.toDtoList(orderPage.getContent());
     }
 
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
@@ -62,9 +69,13 @@ public class OrdersController {
     public OrderDTO getOrderById(
             @Parameter(description = "Order's id")
             @PathVariable("id")Long id){
+        if (id < 0) {
+            throw new IllegalArgumentException("ID має бути більше 0");
+        }
         return orderMapper.toDto(ordersService.getById(id));
     }
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
@@ -78,6 +89,7 @@ public class OrdersController {
         ordersService.payOrder(id);
     }
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),

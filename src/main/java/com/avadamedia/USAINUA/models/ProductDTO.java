@@ -8,6 +8,7 @@ import javax.validation.constraints.Pattern;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
 @Data
@@ -15,6 +16,7 @@ import org.hibernate.validator.constraints.URL;
 public class ProductDTO {
     @NotBlank(message = "Поле 'name' не може бути порожнім")
     @Schema(defaultValue = "ball")
+    @Length(min = 5, max = 50, message = "Поле повинно містити від 5 до 50 символів")
     private String name;
 
     @NotNull(message = "Поле 'price' не може бути порожнім")

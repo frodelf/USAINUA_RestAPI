@@ -38,18 +38,22 @@ public class ShopController {
     private final StorageRepository storageRepository;
 
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Resource not found."),
 
     })
-    @Operation(summary = "Get shops")
-    @GetMapping("/get-shop/{id}")
+    @Operation(summary = "Get all shops")
+    @GetMapping("/get-shop/{page}")
     public List<ShopDTO> getAllShops(
-            @Parameter(description = "shop's ID")
-            @PathVariable("id")long id){
+            @Parameter(description = "Page for pagination")
+            @PathVariable("page")long page){
+        if (page < 0) {
+            throw new IllegalArgumentException("Число має бути більше 0");
+        }
         List<Shop> shops = shopsService.getAll();
-        Page<Shop> shopsPage = new PageImpl<>(shops, PageRequest.of((int)(id-1), 2), shops.size());
+        Page<Shop> shopsPage = new PageImpl<>(shops, PageRequest.of((int)(page-1), 2), shops.size());
         return shopMapper.toDtoList(shopsPage.getContent());
     }
 }

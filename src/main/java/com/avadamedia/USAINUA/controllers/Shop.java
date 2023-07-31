@@ -1,13 +1,7 @@
 package com.avadamedia.USAINUA.controllers;
 
-import com.avadamedia.USAINUA.entity.Product;
-import com.avadamedia.USAINUA.entity.Shop;
-import com.avadamedia.USAINUA.mapper.ProductMapper;
 import com.avadamedia.USAINUA.mapper.ShopMapper;
-import com.avadamedia.USAINUA.models.ProductDTO;
 import com.avadamedia.USAINUA.models.ShopDTO;
-import com.avadamedia.USAINUA.repositories.ProductsRepository;
-import com.avadamedia.USAINUA.repositories.ShopsRepository;
 import com.avadamedia.USAINUA.repositories.StorageRepository;
 import com.avadamedia.USAINUA.services.impl.ShopsServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,7 +26,7 @@ import java.util.List;
 @Tag(name = "Shop controller", description = "Shop API")
 @SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/shops")
-public class ShopController {
+public class Shop {
     private final ShopsServiceImpl shopsService;
     private final ShopMapper shopMapper;
     private final StorageRepository storageRepository;
@@ -52,8 +46,9 @@ public class ShopController {
         if (page < 0) {
             throw new IllegalArgumentException("Число має бути більше 0");
         }
-        List<Shop> shops = shopsService.getAll();
-        Page<Shop> shopsPage = new PageImpl<>(shops, PageRequest.of((int)(page-1), 2), shops.size());
+        List<com.avadamedia.USAINUA.entity.Shop> shops = shopsService.getAll();
+        Page<com.avadamedia.USAINUA.entity.Shop> shopsPage = new PageImpl<>(shops, PageRequest.of((int)(page-1), 2), shops.size());
         return shopMapper.toDtoList(shopsPage.getContent());
     }
+
 }

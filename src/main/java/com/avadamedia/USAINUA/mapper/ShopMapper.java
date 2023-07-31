@@ -14,7 +14,7 @@ public class ShopMapper {
         ShopDTO shopDTO = new ShopDTO();
 
         shopDTO.setLink( shop.getLink() );
-        shopDTO.setImageName( shop.getImageName() );
+        shopDTO.setImageName("/USAINUA_Admin/uploads/shops/"+shop.getImageName());
 
         return shopDTO;
     }

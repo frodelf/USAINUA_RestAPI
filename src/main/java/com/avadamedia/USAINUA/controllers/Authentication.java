@@ -1,7 +1,6 @@
 package com.avadamedia.USAINUA.controllers;
 
 import com.avadamedia.USAINUA.entity.Role;
-import com.avadamedia.USAINUA.repositories.RolesRepository;
 import com.avadamedia.USAINUA.services.AuthService;
 import com.avadamedia.USAINUA.auth.JwtRequest;
 import com.avadamedia.USAINUA.auth.JwtResponse;
@@ -21,12 +20,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Log4j2
 @RestController
 @RequestMapping("/")
 @RequiredArgsConstructor
-public class AuthorizationController {
+public class Authentication {
     private final AuthService authService;
     private final UsersRepository usersRepository;
     private final RolesServiceImpl rolesService;
@@ -39,7 +39,14 @@ public class AuthorizationController {
     })
     @GetMapping("/get-password")
     @Operation(summary = "Get password for user by email")
-    public void getPassword( @RequestParam("email")String email){
+    public void getPassword(@Parameter(description = "login") @RequestParam("email")String email){
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("Email не може бути порожнім");
+        }
+        String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        if (!Pattern.matches(emailRegex, email)) {
+            throw new IllegalArgumentException("Email не коректний");
+        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         int password = (int) (Math.random() * 9000 + 1000);
         EmailUtil.sendEmail("20denisderkach04@gmail.com", email, password);
@@ -82,7 +89,6 @@ public class AuthorizationController {
     public JwtResponse refresh(
             @Parameter(description = "Refresh token")
             @RequestHeader String refreshToken) {
-        log.info(refreshToken);
         return authService.refresh(refreshToken);
     }
 

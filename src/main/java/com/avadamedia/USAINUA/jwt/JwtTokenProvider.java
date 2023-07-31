@@ -69,7 +69,7 @@ public class JwtTokenProvider {
     public JwtResponse refreshUserTokens(String refreshToken) {
         JwtResponse jwtResponse = new JwtResponse();
         if (!validateToken(refreshToken)) {
-            throw new RuntimeException();
+            throw new IllegalArgumentException("Рефреш токен не коректний");
         }
         Long userId = Long.valueOf(getId(refreshToken));
         User user = usersService.getById(userId);
@@ -81,11 +81,16 @@ public class JwtTokenProvider {
     }
 
     public boolean validateToken(String token) {
-        Jws<Claims> claims = Jwts
-                .parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token);
+        Jws<Claims> claims;
+        try {
+             claims = Jwts
+                    .parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token);
+        }catch (Exception e){
+            throw new IllegalArgumentException("Рефреш токен не коректний");
+        }
         return !claims.getBody().getExpiration().before(new Date());
     }
 

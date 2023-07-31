@@ -13,4 +13,7 @@ public class UsersAddressServiceImpl implements UsersAddressService {
 
     public void save(UsersAddress usersAddress){usersAddressRepository.save(usersAddress);}
     public UsersAddress getById(long id){return usersAddressRepository.findById(id).get();}
+    public void deleteById(long id){
+        usersAddressRepository.deleteById(id);
+    }
 }

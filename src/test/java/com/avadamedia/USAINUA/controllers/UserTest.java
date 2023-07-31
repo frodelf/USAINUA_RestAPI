@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class UserTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -73,7 +73,7 @@ public class UserControllerTest {
         userDTO.setEmail("some_email@email.com");
         userDTO.setIsMan(true);
 
-        User user = new User();
+        com.avadamedia.USAINUA.entity.User user = new com.avadamedia.USAINUA.entity.User();
 
         when(usersService.getByEmail(anyString())).thenReturn(user);
 
@@ -89,7 +89,7 @@ public class UserControllerTest {
         Finances finances1 = new Finances(new Date(1), 100);
         Finances finances2 = new Finances(new Date(2), 200);
         List<Finances> finances = Arrays.asList(finances1, finances2);
-        User user = new User();
+        com.avadamedia.USAINUA.entity.User user = new com.avadamedia.USAINUA.entity.User();
         user.setFinances(finances);
         when(usersService.getByEmail(any())).thenReturn(user);
         mockMvc.perform(get("/user/get-all-finances"))
@@ -100,7 +100,7 @@ public class UserControllerTest {
     @Test
     @WithMockUser
     public void testGetMoney() throws Exception {
-        User user = new User();
+        com.avadamedia.USAINUA.entity.User user = new com.avadamedia.USAINUA.entity.User();
         user.setMoney(100);
         when(usersService.getByEmail(any())).thenReturn(user);
         mockMvc.perform(get("/user/get-money"))
@@ -112,7 +112,7 @@ public class UserControllerTest {
     @WithMockUser
     public void testAddMoney() throws Exception {
         double sum = 50.0;
-        User user = new User();
+        com.avadamedia.USAINUA.entity.User user = new com.avadamedia.USAINUA.entity.User();
         user.setMoney(100);
         when(usersService.getByEmail(any())).thenReturn(user);
         mockMvc.perform(put("/user/add-money")
@@ -126,7 +126,7 @@ public class UserControllerTest {
     public void testGetAllCreditCards() throws Exception {
         CreditCard creditCard1 = new CreditCard(1L, "1234123412341234", "12/12", "123");
         CreditCard creditCard2 = new CreditCard(2L, "224223422342234", "01/12", "134");
-        User user = new User();
+        com.avadamedia.USAINUA.entity.User user = new com.avadamedia.USAINUA.entity.User();
         user.setCreditCards(Arrays.asList(creditCard1, creditCard2));
         when(usersService.getByEmail(any())).thenReturn(user);
         mockMvc.perform(get("/user/get-credit-cards"))
@@ -147,7 +147,7 @@ public class UserControllerTest {
         creditCardDTO.setNumber("0000999988887777");
         creditCardDTO.setPeriod("12/12");
         creditCardDTO.setCvv("121");
-        User user = new User();
+        com.avadamedia.USAINUA.entity.User user = new com.avadamedia.USAINUA.entity.User();
         user.setCreditCards(new ArrayList<>());
         when(usersService.getByEmail(any())).thenReturn(user);
         mockMvc.perform(post("/user/add-card")
@@ -170,7 +170,7 @@ public class UserControllerTest {
         userAddressDTO.setDepartment("%323");
         userAddressDTO.setAddressName("home");
 
-        User user = new User();
+        com.avadamedia.USAINUA.entity.User user = new com.avadamedia.USAINUA.entity.User();
         user.setUsersAddresses(new ArrayList<>());
         when(usersService.getByEmail(any())).thenReturn(user);
 

@@ -1,10 +1,8 @@
 package com.avadamedia.USAINUA.controllers;
 
-import com.avadamedia.USAINUA.entity.*;
 import com.avadamedia.USAINUA.mapper.OrderMapper;
 import com.avadamedia.USAINUA.mapper.UserAddressMapper;
 import com.avadamedia.USAINUA.models.OrderDTO;
-import com.avadamedia.USAINUA.models.UserAddressDTO;
 import com.avadamedia.USAINUA.services.impl.*;
 import jakarta.validation.Valid;
 
@@ -29,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Order Controller", description = "Orders API")
 @SecurityRequirement(name = "bearerAuth")
-public class OrdersController {
+public class Order {
     private final OrdersServiceImpl ordersService;
     private final UsersServiceImpl usersService;
     private final UsersAddressServiceImpl usersAddressService;
@@ -53,8 +51,8 @@ public class OrdersController {
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        List<Order> orders = usersService.getByEmail(authentication.getName()).getOrders();
-        Page<Order> orderPage = new PageImpl<>(orders, PageRequest.of((int)(page-1), 2), orders.size());
+        List<com.avadamedia.USAINUA.entity.Order> orders = usersService.getByEmail(authentication.getName()).getOrders();
+        Page<com.avadamedia.USAINUA.entity.Order> orderPage = new PageImpl<>(orders, PageRequest.of((int)(page-1), 2), orders.size());
         return orderMapper.toDtoList(orderPage.getContent());
     }
 

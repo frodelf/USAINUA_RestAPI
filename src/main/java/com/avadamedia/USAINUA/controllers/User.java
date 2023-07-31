@@ -26,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "User Controller", description = "User API")
 @SecurityRequirement(name = "bearerAuth")
-public class UserController {
+public class User {
     private final UsersServiceImpl usersService;
     private final StorageServiceImpl storageService;
     private final CreditCardsServiceImpl creditCardsService;
@@ -91,7 +91,7 @@ public class UserController {
             @Parameter(description = "Money that will be added to the user's balance")
             @RequestParam("sum")double sum){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = usersService.getByEmail(authentication.getName());
+        com.avadamedia.USAINUA.entity.User user = usersService.getByEmail(authentication.getName());
         user.setMoney(user.getMoney()+sum);
         usersService.save(user);
     }
@@ -119,7 +119,7 @@ public class UserController {
     @PostMapping("/add-card")
     public void addCard(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "credit card body for the user")@RequestBody @Valid CreditCardDTO creditCardDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = usersService.getByEmail(authentication.getName());
+        com.avadamedia.USAINUA.entity.User user = usersService.getByEmail(authentication.getName());
         CreditCard cards = creditCardMapper.toEntity(creditCardDTO);
         creditCardsService.save(cards);
         user.getCreditCards().add(cards);
@@ -133,10 +133,10 @@ public class UserController {
 
     })
     @Operation(summary = "Add the address for user")
-    @PutMapping("/add-users-address")
+    @PostMapping("/add-users-address")
     public void addUsersAddress(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User's address body for the user") @RequestBody @Valid UserAddressDTO userAddressDTO){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = usersService.getByEmail(authentication.getName());
+        com.avadamedia.USAINUA.entity.User user = usersService.getByEmail(authentication.getName());
         UsersAddress address = userAddressMapper.toEntity(userAddressDTO);
         usersAddressService.save(address);
         user.getUsersAddresses().add(address);
@@ -169,5 +169,44 @@ public class UserController {
     @GetMapping("/get-storages")
     public List<StorageDTO> getAllStorages(){
         return storageMapper.toDtoList(storageService.getAll());
+    }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "Get user addresses by user id")
+    @GetMapping("/get-address-by-user")
+    public List<UserAddressDTO> getAllAddress(
+            @Parameter(description = "User id")
+            @RequestParam("userId")long userId){
+        return userAddressMapper.toDtoList(usersService.getById(userId).getUsersAddresses());
+    }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "Delete user address by id")
+    @DeleteMapping("/delete-address-by-id")
+    public void deleteByAddressId(
+            @Parameter(description = "Address id")
+            @RequestParam("address id")long id){
+        usersAddressService.deleteById(id);
+    }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "Delete user card by id")
+    @DeleteMapping("/delete-card-by-id")
+    public void deleteByCardId(
+            @Parameter(description = "Card id")
+            @RequestParam("card id")long id){
+        creditCardsService.deleteById(id);
     }
 }

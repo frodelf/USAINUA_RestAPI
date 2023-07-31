@@ -17,7 +17,7 @@ public class ProductMapper {
         productDTO.setPrice( products.getPrice() );
         productDTO.setType( products.getType() );
         productDTO.setLink( products.getLink() );
-        productDTO.setImageName( products.getImageName() );
+        productDTO.setImageName("/USAINUA_Admin/uploads/products/"+products.getImageName() );
 
         return productDTO;
     }

@@ -23,7 +23,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         Server server = new Server();
-        server.setUrl("https://localhost:8888/USAINUA_RestAPI/");
+        server.setUrl("https://slj.avada-media-dev1.od.ua/USAINUA_RestAPI");
         return new OpenAPI().servers(List.of(server));
     }
 }
